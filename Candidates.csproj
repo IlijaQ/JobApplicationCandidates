@@ -71,6 +71,7 @@
     <Compile Include="Models\StatusHistory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data\CandidateContext.cs" />
     <Compile Include="Resources\Enumerations.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
