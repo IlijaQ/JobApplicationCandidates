@@ -20,3 +20,5 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 *.Vs
+Packages/
+Node_modules/
