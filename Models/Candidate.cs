@@ -30,6 +30,7 @@ namespace Candidates.Models
         public List<Attachment> Attachments { get; set; }
         [MaxLength(500)]
         public string PhotoFilePath { get; set; }
+        [Range(0, 5)]
         public byte Rating { get; set; }
         public byte Status { get; set; }
         public List<StatusHistory> StatusLog { get; set; }
