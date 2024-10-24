@@ -62,5 +62,71 @@ namespace Candidates.Data
                 .Include(h => h.StatusHistories)
                 .FirstOrDefault();
         }
+
+        public void CreateCandidate(Candidate candidate)
+        {
+            _context.Candidates.Add(candidate);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateCandidate(Candidate candidateWithUpdates)
+        {
+            var candidateExist = _context.Candidates.FirstOrDefault(i => i.Id == candidateWithUpdates.Id);
+
+            if(candidateExist == null)
+                return false;
+
+            _context.Candidates.Attach(candidateWithUpdates);
+
+            _context.Entry(candidateWithUpdates).State = EntityState.Modified;
+
+            foreach (Link l in candidateWithUpdates.Links)
+                _context.Entry(l).State = EntityState.Modified;
+
+            foreach (StatusHistory sh in candidateWithUpdates.StatusHistories)
+                _context.Entry(sh).State = EntityState.Modified;
+
+            _context.SaveChanges();
+            return true;
+        } 
+
+        public bool DeleteCandidate(int id)
+        {
+            var candidate = _context.Candidates
+                .Include(l => l.Links)
+                .Include(s => s.StatusHistories)
+                .FirstOrDefault(i => i.Id == id);
+
+            if (candidate == null)
+                return false;
+
+            _context.Candidates.Remove(candidate);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public void CreateAttachment(Attachment document)
+        {
+            _context.Attachments.Add(document);
+            _context.SaveChanges ();
+        }
+
+        public bool DeleteAttachment(int id)
+        {
+            var document = _context.Attachments.FirstOrDefault(i => i.Id == id);
+
+            if (document == null)
+                return false;
+
+            _context.Attachments.Remove(document);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public void AddStatusHistoryEntry(StatusHistory entry)
+        {
+            _context.StatusHistories.Add(entry);
+            _context.SaveChanges();
+        }
     }
 }
