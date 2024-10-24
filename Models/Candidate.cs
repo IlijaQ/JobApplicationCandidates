@@ -33,6 +33,6 @@ namespace Candidates.Models
         [Range(0, 5)]
         public byte Rating { get; set; }
         public byte Status { get; set; }
-        public List<StatusHistory> StatusLog { get; set; }
+        public List<StatusHistory> StatusHistories { get; set; }
     }
 }
