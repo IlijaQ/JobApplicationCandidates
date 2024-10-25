@@ -55,6 +55,9 @@
             this.btnResetAllFilters = new Krypton.Toolkit.KryptonButton();
             this.btnSearch = new Krypton.Toolkit.KryptonButton();
             this.btnNewCandidate = new Krypton.Toolkit.KryptonButton();
+            this.SearchPanel = new Krypton.Toolkit.KryptonPanel();
+            this.kryptonProgressBar1 = new Krypton.Toolkit.KryptonProgressBar();
+            this.lblSearch = new Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgwCandidates)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gbStatusAndRatingFilters)).BeginInit();
@@ -69,6 +72,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gbNameJmbgFilters.Panel)).BeginInit();
             this.gbNameJmbgFilters.Panel.SuspendLayout();
             this.gbNameJmbgFilters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchPanel)).BeginInit();
+            this.SearchPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgwCandidates
@@ -377,12 +382,45 @@
             this.btnNewCandidate.TabIndex = 16;
             this.btnNewCandidate.Values.Text = "New Candidate";
             // 
+            // SearchPanel
+            // 
+            this.SearchPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SearchPanel.Controls.Add(this.lblSearch);
+            this.SearchPanel.Controls.Add(this.kryptonProgressBar1);
+            this.SearchPanel.Location = new System.Drawing.Point(502, 332);
+            this.SearchPanel.Name = "SearchPanel";
+            this.SearchPanel.Size = new System.Drawing.Size(361, 85);
+            this.SearchPanel.StateCommon.Color1 = System.Drawing.Color.WhiteSmoke;
+            this.SearchPanel.TabIndex = 17;
+            // 
+            // kryptonProgressBar1
+            // 
+            this.kryptonProgressBar1.Location = new System.Drawing.Point(24, 43);
+            this.kryptonProgressBar1.Name = "kryptonProgressBar1";
+            this.kryptonProgressBar1.Size = new System.Drawing.Size(315, 27);
+            this.kryptonProgressBar1.StateCommon.Back.Color1 = System.Drawing.Color.Green;
+            this.kryptonProgressBar1.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.OneNote;
+            this.kryptonProgressBar1.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.OneNote;
+            this.kryptonProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.kryptonProgressBar1.TabIndex = 0;
+            this.kryptonProgressBar1.Text = "Searching...";
+            this.kryptonProgressBar1.Values.Text = "Searching...";
+            // 
+            // lblSearch
+            // 
+            this.lblSearch.Location = new System.Drawing.Point(124, 13);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(116, 24);
+            this.lblSearch.TabIndex = 1;
+            this.lblSearch.Values.Text = "Fetching Data...";
+            // 
             // Candidates
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1322, 653);
+            this.Controls.Add(this.SearchPanel);
             this.Controls.Add(this.btnNewCandidate);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnResetAllFilters);
@@ -411,6 +449,9 @@
             this.gbNameJmbgFilters.Panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gbNameJmbgFilters)).EndInit();
             this.gbNameJmbgFilters.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SearchPanel)).EndInit();
+            this.SearchPanel.ResumeLayout(false);
+            this.SearchPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -445,6 +486,9 @@
         private Krypton.Toolkit.KryptonButton btnResetAllFilters;
         private Krypton.Toolkit.KryptonButton btnSearch;
         private Krypton.Toolkit.KryptonButton btnNewCandidate;
+        private Krypton.Toolkit.KryptonPanel SearchPanel;
+        private Krypton.Toolkit.KryptonLabel lblSearch;
+        private Krypton.Toolkit.KryptonProgressBar kryptonProgressBar1;
     }
 }
 
