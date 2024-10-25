@@ -35,10 +35,10 @@
             this.tbLastName = new Krypton.Toolkit.KryptonTextBox();
             this.numRatingUpper = new Krypton.Toolkit.KryptonNumericUpDown();
             this.numRatingLower = new Krypton.Toolkit.KryptonNumericUpDown();
-            this.kryptonComboBox1 = new Krypton.Toolkit.KryptonComboBox();
+            this.cbStatus = new Krypton.Toolkit.KryptonComboBox();
             this.kryptonContextMenu1 = new Krypton.Toolkit.KryptonContextMenu();
-            this.kryptonDateTimePicker1 = new Krypton.Toolkit.KryptonDateTimePicker();
-            this.kryptonDateTimePicker2 = new Krypton.Toolkit.KryptonDateTimePicker();
+            this.dtpUpdatedBefore = new Krypton.Toolkit.KryptonDateTimePicker();
+            this.dtpUpdatedAfter = new Krypton.Toolkit.KryptonDateTimePicker();
             this.gbStatusAndRatingFilters = new Krypton.Toolkit.KryptonGroupBox();
             this.btnEnableFilterLowerRating = new Krypton.Toolkit.KryptonButton();
             this.btnEnableFilterUpperRating = new Krypton.Toolkit.KryptonButton();
@@ -56,7 +56,7 @@
             this.btnSearch = new Krypton.Toolkit.KryptonButton();
             this.btnNewCandidate = new Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgwCandidates)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonComboBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gbStatusAndRatingFilters)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gbStatusAndRatingFilters.Panel)).BeginInit();
             this.gbStatusAndRatingFilters.Panel.SuspendLayout();
@@ -93,6 +93,7 @@
             this.btnClose.Size = new System.Drawing.Size(125, 28);
             this.btnClose.TabIndex = 1;
             this.btnClose.Values.Text = "Close";
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // lblCount
             // 
@@ -108,6 +109,7 @@
             // 
             this.tbFirstName.CueHint.CueHintText = "First Name";
             this.tbFirstName.Location = new System.Drawing.Point(23, 12);
+            this.tbFirstName.MaxLength = 100;
             this.tbFirstName.Name = "tbFirstName";
             this.tbFirstName.Size = new System.Drawing.Size(213, 27);
             this.tbFirstName.TabIndex = 3;
@@ -116,6 +118,7 @@
             // 
             this.tbLastName.CueHint.CueHintText = "Last Name";
             this.tbLastName.Location = new System.Drawing.Point(242, 12);
+            this.tbLastName.MaxLength = 100;
             this.tbLastName.Name = "tbLastName";
             this.tbLastName.Size = new System.Drawing.Size(213, 27);
             this.tbLastName.TabIndex = 4;
@@ -135,7 +138,7 @@
             0,
             0});
             this.numRatingUpper.Minimum = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
@@ -143,10 +146,11 @@
             this.numRatingUpper.Size = new System.Drawing.Size(63, 26);
             this.numRatingUpper.TabIndex = 5;
             this.numRatingUpper.Value = new decimal(new int[] {
-            0,
+            5,
             0,
             0,
             0});
+            this.numRatingUpper.ValueChanged += new System.EventHandler(this.numRatingUpper_ValueChanged);
             // 
             // numRatingLower
             // 
@@ -163,7 +167,7 @@
             0,
             0});
             this.numRatingLower.Minimum = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
@@ -171,37 +175,44 @@
             this.numRatingLower.Size = new System.Drawing.Size(63, 26);
             this.numRatingLower.TabIndex = 6;
             this.numRatingLower.Value = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
+            this.numRatingLower.ValueChanged += new System.EventHandler(this.numRatingLower_ValueChanged);
             // 
-            // kryptonComboBox1
+            // cbStatus
             // 
-            this.kryptonComboBox1.DropDownWidth = 206;
-            this.kryptonComboBox1.IntegralHeight = false;
-            this.kryptonComboBox1.Location = new System.Drawing.Point(167, 16);
-            this.kryptonComboBox1.Name = "kryptonComboBox1";
-            this.kryptonComboBox1.Size = new System.Drawing.Size(206, 26);
-            this.kryptonComboBox1.StateCommon.ComboBox.Content.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near;
-            this.kryptonComboBox1.TabIndex = 7;
-            this.kryptonComboBox1.Text = "cbStatus";
+            this.cbStatus.DropDownWidth = 206;
+            this.cbStatus.IntegralHeight = false;
+            this.cbStatus.Location = new System.Drawing.Point(167, 16);
+            this.cbStatus.Name = "cbStatus";
+            this.cbStatus.Size = new System.Drawing.Size(206, 26);
+            this.cbStatus.StateCommon.ComboBox.Content.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near;
+            this.cbStatus.TabIndex = 7;
+            this.cbStatus.Text = "All";
             // 
-            // kryptonDateTimePicker1
+            // dtpUpdatedBefore
             // 
-            this.kryptonDateTimePicker1.Enabled = false;
-            this.kryptonDateTimePicker1.Location = new System.Drawing.Point(161, 16);
-            this.kryptonDateTimePicker1.Name = "kryptonDateTimePicker1";
-            this.kryptonDateTimePicker1.Size = new System.Drawing.Size(215, 25);
-            this.kryptonDateTimePicker1.TabIndex = 8;
+            this.dtpUpdatedBefore.Enabled = false;
+            this.dtpUpdatedBefore.Location = new System.Drawing.Point(161, 16);
+            this.dtpUpdatedBefore.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
+            this.dtpUpdatedBefore.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.dtpUpdatedBefore.Name = "dtpUpdatedBefore";
+            this.dtpUpdatedBefore.Size = new System.Drawing.Size(215, 25);
+            this.dtpUpdatedBefore.TabIndex = 8;
+            this.dtpUpdatedBefore.ValueChanged += new System.EventHandler(this.dtpUpdatedBefore_ValueChanged);
             // 
-            // kryptonDateTimePicker2
+            // dtpUpdatedAfter
             // 
-            this.kryptonDateTimePicker2.Enabled = false;
-            this.kryptonDateTimePicker2.Location = new System.Drawing.Point(161, 47);
-            this.kryptonDateTimePicker2.Name = "kryptonDateTimePicker2";
-            this.kryptonDateTimePicker2.Size = new System.Drawing.Size(215, 25);
-            this.kryptonDateTimePicker2.TabIndex = 9;
+            this.dtpUpdatedAfter.Enabled = false;
+            this.dtpUpdatedAfter.Location = new System.Drawing.Point(161, 47);
+            this.dtpUpdatedAfter.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
+            this.dtpUpdatedAfter.MinDate = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.dtpUpdatedAfter.Name = "dtpUpdatedAfter";
+            this.dtpUpdatedAfter.Size = new System.Drawing.Size(215, 25);
+            this.dtpUpdatedAfter.TabIndex = 9;
+            this.dtpUpdatedAfter.ValueChanged += new System.EventHandler(this.dtpUpdatedAfter_ValueChanged);
             // 
             // gbStatusAndRatingFilters
             // 
@@ -215,7 +226,7 @@
             this.gbStatusAndRatingFilters.Panel.Controls.Add(this.btnEnableFilterUpperRating);
             this.gbStatusAndRatingFilters.Panel.Controls.Add(this.kryptonLabel1);
             this.gbStatusAndRatingFilters.Panel.Controls.Add(this.btnResetStatusRatingFilters);
-            this.gbStatusAndRatingFilters.Panel.Controls.Add(this.kryptonComboBox1);
+            this.gbStatusAndRatingFilters.Panel.Controls.Add(this.cbStatus);
             this.gbStatusAndRatingFilters.Panel.Controls.Add(this.numRatingUpper);
             this.gbStatusAndRatingFilters.Panel.Controls.Add(this.numRatingLower);
             this.gbStatusAndRatingFilters.Size = new System.Drawing.Size(401, 147);
@@ -228,6 +239,7 @@
             this.btnEnableFilterLowerRating.Size = new System.Drawing.Size(119, 28);
             this.btnEnableFilterLowerRating.TabIndex = 14;
             this.btnEnableFilterLowerRating.Values.Text = "Lower Rating";
+            this.btnEnableFilterLowerRating.Click += new System.EventHandler(this.btnEnableFilterLowerRating_Click);
             // 
             // btnEnableFilterUpperRating
             // 
@@ -236,6 +248,7 @@
             this.btnEnableFilterUpperRating.Size = new System.Drawing.Size(119, 28);
             this.btnEnableFilterUpperRating.TabIndex = 13;
             this.btnEnableFilterUpperRating.Values.Text = "Upper Rating";
+            this.btnEnableFilterUpperRating.Click += new System.EventHandler(this.btnEnableFilterUpperRating_Click);
             // 
             // kryptonLabel1
             // 
@@ -252,6 +265,7 @@
             this.btnResetStatusRatingFilters.Size = new System.Drawing.Size(110, 28);
             this.btnResetStatusRatingFilters.TabIndex = 11;
             this.btnResetStatusRatingFilters.Values.Text = "Reset Filters";
+            this.btnResetStatusRatingFilters.Click += new System.EventHandler(this.btnResetStatusRatingFilters_Click);
             // 
             // gbDateFilters
             // 
@@ -264,8 +278,8 @@
             this.gbDateFilters.Panel.Controls.Add(this.btnEnableFilterUpdatedAfter);
             this.gbDateFilters.Panel.Controls.Add(this.btnResetDateFilters);
             this.gbDateFilters.Panel.Controls.Add(this.btnEnableFilterUpdatedBefore);
-            this.gbDateFilters.Panel.Controls.Add(this.kryptonDateTimePicker2);
-            this.gbDateFilters.Panel.Controls.Add(this.kryptonDateTimePicker1);
+            this.gbDateFilters.Panel.Controls.Add(this.dtpUpdatedAfter);
+            this.gbDateFilters.Panel.Controls.Add(this.dtpUpdatedBefore);
             this.gbDateFilters.Size = new System.Drawing.Size(401, 146);
             this.gbDateFilters.TabIndex = 11;
             // 
@@ -276,6 +290,7 @@
             this.btnEnableFilterUpdatedAfter.Size = new System.Drawing.Size(119, 28);
             this.btnEnableFilterUpdatedAfter.TabIndex = 16;
             this.btnEnableFilterUpdatedAfter.Values.Text = "Updated after";
+            this.btnEnableFilterUpdatedAfter.Click += new System.EventHandler(this.btnEnableFilterUpdatedAfter_Click);
             // 
             // btnResetDateFilters
             // 
@@ -284,6 +299,7 @@
             this.btnResetDateFilters.Size = new System.Drawing.Size(110, 28);
             this.btnResetDateFilters.TabIndex = 15;
             this.btnResetDateFilters.Values.Text = "Reset Filters";
+            this.btnResetDateFilters.Click += new System.EventHandler(this.btnResetDateFilters_Click);
             // 
             // btnEnableFilterUpdatedBefore
             // 
@@ -292,6 +308,7 @@
             this.btnEnableFilterUpdatedBefore.Size = new System.Drawing.Size(119, 28);
             this.btnEnableFilterUpdatedBefore.TabIndex = 15;
             this.btnEnableFilterUpdatedBefore.Values.Text = "Updated before";
+            this.btnEnableFilterUpdatedBefore.Click += new System.EventHandler(this.btnEnableFilterUpdatedBefore_Click);
             // 
             // tbJmbg
             // 
@@ -324,6 +341,7 @@
             this.btnResetNameJmbgFilters.Size = new System.Drawing.Size(110, 28);
             this.btnResetNameJmbgFilters.TabIndex = 17;
             this.btnResetNameJmbgFilters.Values.Text = "Reset Filters";
+            this.btnResetNameJmbgFilters.Click += new System.EventHandler(this.btnResetNameJmbgFilters_Click);
             // 
             // kryptonLabel2
             // 
@@ -341,6 +359,7 @@
             this.btnResetAllFilters.Size = new System.Drawing.Size(135, 26);
             this.btnResetAllFilters.TabIndex = 14;
             this.btnResetAllFilters.Values.Text = "Reset All Filters";
+            this.btnResetAllFilters.Click += new System.EventHandler(this.btnResetAllFilters_Click);
             // 
             // btnSearch
             // 
@@ -377,7 +396,7 @@
             this.Name = "Candidates";
             this.Text = "Candidates";
             ((System.ComponentModel.ISupportInitialize)(this.dgwCandidates)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonComboBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gbStatusAndRatingFilters.Panel)).EndInit();
             this.gbStatusAndRatingFilters.Panel.ResumeLayout(false);
             this.gbStatusAndRatingFilters.Panel.PerformLayout();
@@ -406,10 +425,10 @@
         private Krypton.Toolkit.KryptonTextBox tbLastName;
         private Krypton.Toolkit.KryptonNumericUpDown numRatingUpper;
         private Krypton.Toolkit.KryptonNumericUpDown numRatingLower;
-        private Krypton.Toolkit.KryptonComboBox kryptonComboBox1;
+        private Krypton.Toolkit.KryptonComboBox cbStatus;
         private Krypton.Toolkit.KryptonContextMenu kryptonContextMenu1;
-        private Krypton.Toolkit.KryptonDateTimePicker kryptonDateTimePicker1;
-        private Krypton.Toolkit.KryptonDateTimePicker kryptonDateTimePicker2;
+        private Krypton.Toolkit.KryptonDateTimePicker dtpUpdatedBefore;
+        private Krypton.Toolkit.KryptonDateTimePicker dtpUpdatedAfter;
         private Krypton.Toolkit.KryptonGroupBox gbStatusAndRatingFilters;
         private Krypton.Toolkit.KryptonButton btnResetStatusRatingFilters;
         private Krypton.Toolkit.KryptonButton btnEnableFilterUpperRating;
