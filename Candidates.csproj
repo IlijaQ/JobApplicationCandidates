@@ -45,9 +45,13 @@
     <Reference Include="EntityFrameworkExtras.EF6, Version=3.0.5.0, Culture=neutral, PublicKeyToken=afc61983f100d280, processorArchitecture=MSIL">
       <HintPath>packages\EntityFrameworkExtras.EF6.3.0.5\lib\net45\EntityFrameworkExtras.EF6.dll</HintPath>
     </Reference>
+    <Reference Include="Krypton.Toolkit, Version=85.24.10.288, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
+      <HintPath>packages\Krypton.Toolkit.85.24.10.288\lib\net48\Krypton.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,11 +64,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Repository.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Candidates.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Candidates.Designer.cs">
+      <DependentUpon>Candidates.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Candidate.cs" />
@@ -75,6 +79,9 @@
     <Compile Include="Data\CandidateContext.cs" />
     <Compile Include="Resources\CandidateSearchFilter.cs" />
     <Compile Include="Resources\Enumerations.cs" />
+    <EmbeddedResource Include="Candidates.resx">
+      <DependentUpon>Candidates.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
