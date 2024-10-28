@@ -35,8 +35,6 @@ namespace CandidateLog
             dgvCandidates.DataSource = null;
             dgvCandidates.Rows.Clear();
             dgvCandidates.Columns.Clear();
-            //dgvCandidates.AutoGenerateColumns = true;
-            dgvCandidates.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             GetSearchFilters();
             bgwGetCandidates.RunWorkerAsync();
         }
@@ -110,23 +108,7 @@ namespace CandidateLog
                     lblCount.Text = "Count: " + results.Count;
                     lblCount.Visible = true;
 
-                    //Format columns
-
-                    //dgvCandidates.Columns["Jmbg"].Visible = false;
-                    //dgvCandidates.Columns["BirthDate"].Visible = false;
-                    //dgvCandidates.Columns["AdditionalInfo"].Visible = false;
-                    //dgvCandidates.Columns["PhotoFilePath"].Visible = false;
-                    //dgvCandidates.Columns["AdditionalInfo"].Visible = false;
-
-
-
-                    KryptonDataGridViewButtonColumn viewCandidate = new KryptonDataGridViewButtonColumn();
-                    viewCandidate.Name = "ViewCandidate";
-                    viewCandidate.DefaultCellStyle.NullValue = "View Candidate";
-
-                    // format Width and header text
-
-
+                    FormatGridColumns();
 
                 }
                 catch (Exception ex)
@@ -138,7 +120,6 @@ namespace CandidateLog
             SearchPanel.Visible = false;
             SearchFilter = null;
         }
-
         private void ZeroResultsUiChanges()
         {
             lblCount.Visible = false;
@@ -148,6 +129,35 @@ namespace CandidateLog
                 "Information",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+        }
+        private void FormatGridColumns()
+        {
+            dgvCandidates.Columns["DatabaseId"].HeaderText = "ID";
+            dgvCandidates.Columns["LastName"].HeaderText = "Last Name";
+            dgvCandidates.Columns["PhoneNumber"].HeaderText = "Phone Number";
+            dgvCandidates.Columns["LastUpdate"].HeaderText = "Last Update";
+
+            dgvCandidates.Columns["LastUpdate"].DefaultCellStyle.Format = "dd.MM.yyyy.";
+
+            dgvCandidates.Columns["DatabaseId"].Width = 40;
+            dgvCandidates.Columns["DatabaseId"].MinimumWidth = 40;
+            dgvCandidates.Columns["Name"].MinimumWidth = 100;
+            dgvCandidates.Columns["LastName"].MinimumWidth = 100;
+            dgvCandidates.Columns["Email"].Width = 250;
+            dgvCandidates.Columns["Email"].MinimumWidth = 250;
+            dgvCandidates.Columns["PhoneNumber"].MinimumWidth = 110;
+            dgvCandidates.Columns["LastUpdate"].Width = 90;
+            dgvCandidates.Columns["LastUpdate"].MinimumWidth = 90;
+            dgvCandidates.Columns["Rating"].Width = 70;
+            dgvCandidates.Columns["Rating"].MinimumWidth = 70;
+            dgvCandidates.Columns["Status"].Width = 80;
+            dgvCandidates.Columns["Status"].MinimumWidth = 80;
+
+            KryptonDataGridViewButtonColumn viewCandidate = new KryptonDataGridViewButtonColumn();
+            viewCandidate.Name = "ViewCandidate";
+            viewCandidate.HeaderText = string.Empty;
+            viewCandidate.DefaultCellStyle.NullValue = "View Candidate";
+            dgvCandidates.Columns.Add(viewCandidate);
         }
 
         private void btnResetNameJmbgFilters_Click(object sender, EventArgs e)
