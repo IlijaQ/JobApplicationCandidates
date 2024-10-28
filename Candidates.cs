@@ -1,4 +1,5 @@
-﻿using Krypton.Toolkit;
+﻿using Candidates.Resources;
+using Krypton.Toolkit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,18 +14,19 @@ namespace Candidates
 {
     public partial class Candidates : KryptonForm
     {
+        private CandidateSearchFilter SearchFilter { get; set; }
+
         public Candidates()
         {
             InitializeComponent();
 
-            cbStatus.Items.Clear();
-            cbStatus.Items.Add("All");
-            string[] statuses = Enum.GetNames(typeof(Resources.Status));
-            cbStatus.Items.AddRange(statuses);
+            cbStatus.DataSource = Enum.GetValues(typeof(Resources.Status));
 
             gbNameJmbgFilters.Text = "Filter by Name and jmbg";
             gbDateFilters.Text = "Filter by Date";
             gbStatusAndRatingFilters.Text = "Status and Rating";
+
+            PopulateCandidatesGrid();
         }
 
         private void btnResetNameJmbgFilters_Click(object sender, EventArgs e)
@@ -57,7 +59,7 @@ namespace Candidates
         }
         private void ResetStatusRating()
         {
-            cbStatus.SelectedItem = "All";
+            cbStatus.SelectedItem = Resources.Status.All;
             numRatingUpper.Enabled = false;
             numRatingLower.Enabled = false;
             numRatingUpper.Value = 5;
@@ -121,6 +123,69 @@ namespace Candidates
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            PopulateCandidatesGrid();
+        }
+
+        public void PopulateCandidatesGrid()
+        {
+            dgvCandidates.DataSource = null;
+            GetSearchFilters();
+            bgwGetCandidates.RunWorkerAsync();
+        }
+        private void GetSearchFilters()
+        {
+            SearchFilter = new CandidateSearchFilter();
+
+            if (!string.IsNullOrEmpty(tbFirstName.Text))
+                SearchFilter.FirstName = tbFirstName.Text;
+
+            if (!string.IsNullOrEmpty(tbLastName.Text))
+                SearchFilter.LastName = tbLastName.Text;
+
+            if (!string.IsNullOrEmpty(tbJmbg.Text))
+                SearchFilter.Jmbg = tbJmbg.Text;
+
+            if(dtpUpdatedAfter.Enabled)
+                SearchFilter.LastUpdateFrom = dtpUpdatedAfter.Value;
+
+            if (dtpUpdatedBefore.Enabled)
+                SearchFilter.LastUpdateTo = dtpUpdatedBefore.Value;
+
+            if (numRatingUpper.Enabled)
+                SearchFilter.RatingTo = (byte)numRatingUpper.Value;
+
+            if (numRatingLower.Enabled)
+                SearchFilter.RatingFrom = (byte)numRatingLower.Value;
+
+            if ((Resources.Status)cbStatus.SelectedItem != Resources.Status.All)
+                SearchFilter.Status = (byte)(Resources.Status)cbStatus.SelectedItem;
+        }
+
+        private void bgwGetCandidates_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (bgwGetCandidates.CancellationPending)
+                return;
+
+            try
+            {
+
+            }
+            catch(Exception ex)
+            {
+                 
+            }
+        }
+
+        private void bgwGetCandidates_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (!e.Cancelled)
+            {
+
+            }
         }
     }
 }

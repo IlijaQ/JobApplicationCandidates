@@ -8,7 +8,7 @@ namespace Candidates.Resources
 {
     public class CandidateSearchFilter
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Jmbg { get; set; }
         public DateTime LastUpdateFrom { get; set; }

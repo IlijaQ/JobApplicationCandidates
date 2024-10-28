@@ -8,11 +8,12 @@ namespace Candidates.Resources
 {
     public enum Status
     {
-        Candidate,
-        Qualified,
-        Interview,
-        ShortListed,
-        Employee
+        All,
+        Candidate, // white
+        Qualified, // yellow
+        Interview, // blue
+        ShortListed, // purple
+        Employee // green
     }
 
     public enum FileType

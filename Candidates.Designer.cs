@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgwCandidates = new Krypton.Toolkit.KryptonDataGridView();
+            this.dgvCandidates = new Krypton.Toolkit.KryptonDataGridView();
             this.btnClose = new Krypton.Toolkit.KryptonButton();
             this.lblCount = new Krypton.Toolkit.KryptonLabel();
             this.tbFirstName = new Krypton.Toolkit.KryptonTextBox();
@@ -36,7 +36,6 @@
             this.numRatingUpper = new Krypton.Toolkit.KryptonNumericUpDown();
             this.numRatingLower = new Krypton.Toolkit.KryptonNumericUpDown();
             this.cbStatus = new Krypton.Toolkit.KryptonComboBox();
-            this.kryptonContextMenu1 = new Krypton.Toolkit.KryptonContextMenu();
             this.dtpUpdatedBefore = new Krypton.Toolkit.KryptonDateTimePicker();
             this.dtpUpdatedAfter = new Krypton.Toolkit.KryptonDateTimePicker();
             this.gbStatusAndRatingFilters = new Krypton.Toolkit.KryptonGroupBox();
@@ -58,7 +57,8 @@
             this.SearchPanel = new Krypton.Toolkit.KryptonPanel();
             this.kryptonProgressBar1 = new Krypton.Toolkit.KryptonProgressBar();
             this.lblSearch = new Krypton.Toolkit.KryptonLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwCandidates)).BeginInit();
+            this.bgwGetCandidates = new System.ComponentModel.BackgroundWorker();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCandidates)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gbStatusAndRatingFilters)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gbStatusAndRatingFilters.Panel)).BeginInit();
@@ -76,19 +76,19 @@
             this.SearchPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dgwCandidates
+            // dgvCandidates
             // 
-            this.dgwCandidates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvCandidates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgwCandidates.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgwCandidates.ColumnHeadersHeight = 36;
-            this.dgwCandidates.Location = new System.Drawing.Point(12, 216);
-            this.dgwCandidates.Name = "dgwCandidates";
-            this.dgwCandidates.RowHeadersWidth = 51;
-            this.dgwCandidates.RowTemplate.Height = 24;
-            this.dgwCandidates.Size = new System.Drawing.Size(1298, 391);
-            this.dgwCandidates.TabIndex = 0;
+            this.dgvCandidates.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvCandidates.ColumnHeadersHeight = 36;
+            this.dgvCandidates.Location = new System.Drawing.Point(12, 216);
+            this.dgvCandidates.Name = "dgvCandidates";
+            this.dgvCandidates.RowHeadersWidth = 51;
+            this.dgvCandidates.RowTemplate.Height = 24;
+            this.dgvCandidates.Size = new System.Drawing.Size(1298, 391);
+            this.dgvCandidates.TabIndex = 0;
             // 
             // btnClose
             // 
@@ -326,7 +326,7 @@
             // 
             // gbNameJmbgFilters
             // 
-            this.gbNameJmbgFilters.Location = new System.Drawing.Point(12, 64);
+            this.gbNameJmbgFilters.Location = new System.Drawing.Point(12, 63);
             this.gbNameJmbgFilters.Name = "gbNameJmbgFilters";
             // 
             // gbNameJmbgFilters.Panel
@@ -373,6 +373,7 @@
             this.btnSearch.Size = new System.Drawing.Size(135, 26);
             this.btnSearch.TabIndex = 15;
             this.btnSearch.Values.Text = "Search";
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // btnNewCandidate
             // 
@@ -414,6 +415,11 @@
             this.lblSearch.TabIndex = 1;
             this.lblSearch.Values.Text = "Fetching Data...";
             // 
+            // bgwGetCandidates
+            // 
+            this.bgwGetCandidates.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwGetCandidates_DoWork);
+            this.bgwGetCandidates.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwGetCandidates_RunWorkerCompleted);
+            // 
             // Candidates
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -429,11 +435,11 @@
             this.Controls.Add(this.gbStatusAndRatingFilters);
             this.Controls.Add(this.lblCount);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.dgwCandidates);
+            this.Controls.Add(this.dgvCandidates);
             this.MinimumSize = new System.Drawing.Size(1340, 700);
             this.Name = "Candidates";
             this.Text = "Candidates";
-            ((System.ComponentModel.ISupportInitialize)(this.dgwCandidates)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCandidates)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gbStatusAndRatingFilters.Panel)).EndInit();
             this.gbStatusAndRatingFilters.Panel.ResumeLayout(false);
@@ -459,7 +465,7 @@
 
         #endregion
 
-        private Krypton.Toolkit.KryptonDataGridView dgwCandidates;
+        private Krypton.Toolkit.KryptonDataGridView dgvCandidates;
         private Krypton.Toolkit.KryptonButton btnClose;
         private Krypton.Toolkit.KryptonLabel lblCount;
         private Krypton.Toolkit.KryptonTextBox tbFirstName;
@@ -467,7 +473,6 @@
         private Krypton.Toolkit.KryptonNumericUpDown numRatingUpper;
         private Krypton.Toolkit.KryptonNumericUpDown numRatingLower;
         private Krypton.Toolkit.KryptonComboBox cbStatus;
-        private Krypton.Toolkit.KryptonContextMenu kryptonContextMenu1;
         private Krypton.Toolkit.KryptonDateTimePicker dtpUpdatedBefore;
         private Krypton.Toolkit.KryptonDateTimePicker dtpUpdatedAfter;
         private Krypton.Toolkit.KryptonGroupBox gbStatusAndRatingFilters;
@@ -489,6 +494,7 @@
         private Krypton.Toolkit.KryptonPanel SearchPanel;
         private Krypton.Toolkit.KryptonLabel lblSearch;
         private Krypton.Toolkit.KryptonProgressBar kryptonProgressBar1;
+        private System.ComponentModel.BackgroundWorker bgwGetCandidates;
     }
 }
 

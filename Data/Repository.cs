@@ -27,10 +27,10 @@ namespace Candidates.Data
         }
         private static IQueryable<Candidate> ApplyFilters(CandidateSearchFilter filter, IQueryable<Candidate> candidates)
         {
-            if (!string.IsNullOrEmpty(filter.Name))
+            if (!string.IsNullOrEmpty(filter.FirstName))
             {
-                filter.Name = filter.Name.ToLower();
-                candidates = candidates.Where(n => n.Name.ToLower().Contains(filter.Name));
+                filter.FirstName = filter.FirstName.ToLower();
+                candidates = candidates.Where(n => n.Name.ToLower().Contains(filter.FirstName));
             }
             if (!string.IsNullOrEmpty(filter.LastName))
             {
