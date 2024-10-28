@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Candidates.Resources
+namespace CandidateLog.Resources
 {
     public class CandidateSearchFilter
     {

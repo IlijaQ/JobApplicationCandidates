@@ -1,5 +1,5 @@
-﻿using Candidates.Models;
-using Candidates.Resources;
+﻿using CandidateLog.Models;
+using CandidateLog.Resources;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Candidates.Data
+namespace CandidateLog.Data
 {
     public class Repository
     {

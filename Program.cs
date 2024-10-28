@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Candidates
+namespace CandidateLog
 {
     internal static class Program
     {

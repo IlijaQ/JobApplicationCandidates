@@ -1,4 +1,4 @@
-﻿using Candidates.Resources;
+﻿using CandidateLog.Resources;
 using Krypton.Toolkit;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Candidates
+namespace CandidateLog
 {
     public partial class Candidates : KryptonForm
     {

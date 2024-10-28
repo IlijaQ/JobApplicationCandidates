@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Candidates.Models
+namespace CandidateLog.Models
 {
     public class StatusHistory
     {

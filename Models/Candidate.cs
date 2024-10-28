@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace Candidates.Models
+namespace CandidateLog.Models
 {
     public class Candidate
     {
