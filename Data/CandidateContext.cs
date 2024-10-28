@@ -12,7 +12,7 @@ namespace CandidateLog.Data
     {
         public CandidateContext() : base("name=CandidateContext")
         {
-
+            Database.CommandTimeout = 600;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

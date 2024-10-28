@@ -1,4 +1,6 @@
-﻿using CandidateLog.Resources;
+﻿using CandidateLog.Data;
+using CandidateLog.Models;
+using CandidateLog.Resources;
 using Krypton.Toolkit;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,125 @@ namespace CandidateLog
             gbStatusAndRatingFilters.Text = "Status and Rating";
 
             PopulateCandidatesGrid();
+        }
+        public void PopulateCandidatesGrid()
+        {
+            dgvCandidates.DataSource = null;
+            dgvCandidates.Rows.Clear();
+            dgvCandidates.Columns.Clear();
+            //dgvCandidates.AutoGenerateColumns = true;
+            dgvCandidates.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            GetSearchFilters();
+            bgwGetCandidates.RunWorkerAsync();
+        }
+        private void GetSearchFilters()
+        {
+            SearchFilter = new CandidateSearchFilter();
+
+            if (!string.IsNullOrEmpty(tbFirstName.Text))
+                SearchFilter.FirstName = tbFirstName.Text;
+
+            if (!string.IsNullOrEmpty(tbLastName.Text))
+                SearchFilter.LastName = tbLastName.Text;
+
+            if (!string.IsNullOrEmpty(tbJmbg.Text))
+                SearchFilter.Jmbg = tbJmbg.Text;
+
+            if (dtpUpdatedAfter.Enabled)
+                SearchFilter.LastUpdateFrom = dtpUpdatedAfter.Value;
+
+            if (dtpUpdatedBefore.Enabled)
+                SearchFilter.LastUpdateTo = dtpUpdatedBefore.Value;
+
+            if (numRatingUpper.Enabled)
+                SearchFilter.RatingTo = (byte)numRatingUpper.Value;
+
+            if (numRatingLower.Enabled)
+                SearchFilter.RatingFrom = (byte)numRatingLower.Value;
+
+            if ((Resources.Status)cbStatus.SelectedItem != Resources.Status.All)
+                SearchFilter.Status = (byte)(Resources.Status)cbStatus.SelectedItem;
+        }
+
+        private void bgwGetCandidates_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (bgwGetCandidates.CancellationPending)
+                return;
+
+            try
+            {
+                using(var db = new CandidateContext())
+                {
+                    var repo = new Repository(db);
+                    e.Result = repo.GetAllCandidates(SearchFilter);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Loading data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true;
+            }
+        }
+
+        private void bgwGetCandidates_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (!e.Cancelled)
+            {
+                try
+                {
+                    var results = (List<Candidate>)e.Result;
+
+                    if (results.Count == 0)
+                    {
+                        ZeroResultsUiChanges();
+                        return;
+                    }
+
+                    List<DisplayCandidate> dgvDisplayableResults = BindingList.BindCandidates(results);
+                    dgvCandidates.DataSource = dgvDisplayableResults;
+                    dgvCandidates.AutoGenerateColumns = true;
+
+                    lblCount.Text = "Count: " + results.Count;
+                    lblCount.Visible = true;
+
+                    //Format columns
+
+                    //dgvCandidates.Columns["Jmbg"].Visible = false;
+                    //dgvCandidates.Columns["BirthDate"].Visible = false;
+                    //dgvCandidates.Columns["AdditionalInfo"].Visible = false;
+                    //dgvCandidates.Columns["PhotoFilePath"].Visible = false;
+                    //dgvCandidates.Columns["AdditionalInfo"].Visible = false;
+
+
+
+                    KryptonDataGridViewButtonColumn viewCandidate = new KryptonDataGridViewButtonColumn();
+                    viewCandidate.Name = "ViewCandidate";
+                    viewCandidate.DefaultCellStyle.NullValue = "View Candidate";
+
+                    // format Width and header text
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            SearchPanel.Visible = false;
+            SearchFilter = null;
+        }
+
+        private void ZeroResultsUiChanges()
+        {
+            lblCount.Visible = false;
+            SearchPanel.Visible = false;
+            SearchFilter = null;
+            MessageBox.Show("No Candidates in the database.\r\nClick\"Create\" to insert new Candidates.",
+                "Information",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         private void btnResetNameJmbgFilters_Click(object sender, EventArgs e)
@@ -130,62 +251,8 @@ namespace CandidateLog
             PopulateCandidatesGrid();
         }
 
-        public void PopulateCandidatesGrid()
-        {
-            dgvCandidates.DataSource = null;
-            GetSearchFilters();
-            bgwGetCandidates.RunWorkerAsync();
-        }
-        private void GetSearchFilters()
-        {
-            SearchFilter = new CandidateSearchFilter();
+        
 
-            if (!string.IsNullOrEmpty(tbFirstName.Text))
-                SearchFilter.FirstName = tbFirstName.Text;
-
-            if (!string.IsNullOrEmpty(tbLastName.Text))
-                SearchFilter.LastName = tbLastName.Text;
-
-            if (!string.IsNullOrEmpty(tbJmbg.Text))
-                SearchFilter.Jmbg = tbJmbg.Text;
-
-            if(dtpUpdatedAfter.Enabled)
-                SearchFilter.LastUpdateFrom = dtpUpdatedAfter.Value;
-
-            if (dtpUpdatedBefore.Enabled)
-                SearchFilter.LastUpdateTo = dtpUpdatedBefore.Value;
-
-            if (numRatingUpper.Enabled)
-                SearchFilter.RatingTo = (byte)numRatingUpper.Value;
-
-            if (numRatingLower.Enabled)
-                SearchFilter.RatingFrom = (byte)numRatingLower.Value;
-
-            if ((Resources.Status)cbStatus.SelectedItem != Resources.Status.All)
-                SearchFilter.Status = (byte)(Resources.Status)cbStatus.SelectedItem;
-        }
-
-        private void bgwGetCandidates_DoWork(object sender, DoWorkEventArgs e)
-        {
-            if (bgwGetCandidates.CancellationPending)
-                return;
-
-            try
-            {
-
-            }
-            catch(Exception ex)
-            {
-                 
-            }
-        }
-
-        private void bgwGetCandidates_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (!e.Cancelled)
-            {
-
-            }
-        }
+        
     }
 }

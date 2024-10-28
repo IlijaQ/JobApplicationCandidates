@@ -70,6 +70,11 @@
     <Compile Include="Candidates.Designer.cs">
       <DependentUpon>Candidates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202410281231077_InitialCreate.cs" />
+    <Compile Include="Migrations\202410281231077_InitialCreate.designer.cs">
+      <DependentUpon>202410281231077_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\Link.cs" />
@@ -77,10 +82,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\CandidateContext.cs" />
+    <Compile Include="Resources\BindingList.cs" />
+    <Compile Include="Resources\DisplayCandidate.cs" />
     <Compile Include="Resources\CandidateSearchFilter.cs" />
     <Compile Include="Resources\Enumerations.cs" />
     <EmbeddedResource Include="Candidates.resx">
       <DependentUpon>Candidates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410281231077_InitialCreate.resx">
+      <DependentUpon>202410281231077_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
