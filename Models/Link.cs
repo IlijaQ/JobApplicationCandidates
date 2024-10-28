@@ -13,7 +13,7 @@ namespace Candidates.Models
         public int Id { get; set; }
         [ForeignKey("Candidate")]
         public int CandidateId { get; set; }
-        [MaxLength(500)]
         public string UrlPath { get; set; }
+        public virtual Candidate Candidate { get; set; }
     }
 }

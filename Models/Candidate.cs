@@ -9,30 +9,23 @@ namespace Candidates.Models
 {
     public class Candidate
     {
+        [Key]
         public int Id { get; set; }
-        [MaxLength(100)]
         public string Name { get; set; }
-        [MaxLength(100)]
         public string LastName { get; set; }
-        [MinLength(13)]
-        [MaxLength(13)]
         public string Jmbg { get; set; }
         public DateTime BirthDate { get; set; }
-        [EmailAddress]
-        [MaxLength(100)]
         public string Email { get; set; }
-        public List<Link> Links { get; set; }
-        [MaxLength(15)]
+        public virtual ICollection<Link> Links { get; set; }
         public string PhoneNumber { get; set; }
-        [MaxLength(300)]
         public string AdditionalInfo { get; set; }
         public DateTime LastUpdate { get; set; }
-        public List<Attachment> Attachments { get; set; }
-        [MaxLength(500)]
+        public virtual ICollection<Attachment> Attachments { get; set; }
         public string PhotoFilePath { get; set; }
-        [Range(0, 5)]
         public byte Rating { get; set; }
         public byte Status { get; set; }
-        public List<StatusHistory> StatusHistories { get; set; }
+        public virtual ICollection<StatusHistory> StatusHistories { get; set; }
+
+        
     }
 }

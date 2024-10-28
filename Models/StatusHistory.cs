@@ -14,5 +14,6 @@ namespace Candidates.Models
         public int CandidateId { get; set; }
         public byte Status { get; set; }
         public DateTime StatusUpdate { get; set; }
+        public virtual Candidate Candidate { get; set; }
     }
 }

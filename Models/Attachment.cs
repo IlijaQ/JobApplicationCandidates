@@ -13,11 +13,10 @@ namespace Candidates.Models
         public int Id { get; set; }
         [ForeignKey("Candidate")]
         public int CandidateId { get; set; }
-        [MaxLength(50)]
         public string FileName { get; set; }
-        [MaxLength(500)]
         public string FilePath { get; set; }
         public byte Type { get; set; }
         public DateTime LastUpdate { get; set; }
+        public virtual Candidate Candidate { get; set; }
     }
 }
