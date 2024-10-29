@@ -17,6 +17,7 @@ namespace CandidateLog
     public partial class Candidates : KryptonForm
     {
         private CandidateSearchFilter SearchFilter { get; set; }
+        private string LastSortedColumn {  get; set; }
 
         public Candidates()
         {
@@ -101,9 +102,14 @@ namespace CandidateLog
                         return;
                     }
 
-                    List<DisplayCandidate> dgvDisplayableResults = BindingList.BindCandidates(results);
+                    BindingList<DisplayCandidate> dgvDisplayableResults = BindData.BindCandidates(results);
                     dgvCandidates.DataSource = dgvDisplayableResults;
-                    dgvCandidates.AutoGenerateColumns = true;
+
+
+                    
+                    // sortableList;
+                    //dgvCandidates.DataSource = bindingSource;
+                    //dgvCandidates.AutoGenerateColumns = true;
 
                     lblCount.Text = "Count: " + results.Count;
                     lblCount.Visible = true;
@@ -263,7 +269,7 @@ namespace CandidateLog
 
         private void dgvCandidates_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
-            var grid = sender as DataGridView;
+            var grid = sender as KryptonDataGridView;
 
             DrawRowNumbers(e, grid);
 
@@ -293,6 +299,32 @@ namespace CandidateLog
 
             var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
             e.Graphics.DrawString(rowIndex, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
+        }
+
+        private void dgvCandidates_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var grid = sender as KryptonDataGridView;
+            var columnName = grid.Columns[e.ColumnIndex].Name;
+
+            if (grid.DataSource is BindingList<DisplayCandidate> bindingList)
+            {
+                List<DisplayCandidate> sortedList;
+
+                if (columnName != LastSortedColumn)
+                {
+                    sortedList = bindingList.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+                    LastSortedColumn = columnName;
+                }
+                else
+                {
+                    sortedList = bindingList.OrderByDescending(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+                    LastSortedColumn = "purpously different to reverse sort order";
+                }
+
+                bindingList.Clear();
+                foreach (var item in sortedList)
+                    bindingList.Add(item);
+            }
         }
     }
 }
