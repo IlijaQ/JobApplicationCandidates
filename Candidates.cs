@@ -261,8 +261,38 @@ namespace CandidateLog
             PopulateCandidatesGrid();
         }
 
-        
+        private void dgvCandidates_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            var grid = sender as DataGridView;
 
-        
+            DrawRowNumbers(e, grid);
+
+            ChangeRowColorBasedOnStatus(e, grid);
+        }
+        private static void ChangeRowColorBasedOnStatus(DataGridViewRowPostPaintEventArgs e, DataGridView grid)
+        {
+            string status = grid.Rows[e.RowIndex].Cells["Status"].Value.ToString();
+            switch (status)
+            {
+                case "Candidate": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White; break;
+                case "Qualified": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow; break;
+                case "Interview": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSkyBlue; break;
+                case "ShortListed": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.IndianRed; break;
+                case "Employee": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.GreenYellow; break;
+                default: grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray; break;
+            }
+        }
+        private void DrawRowNumbers(DataGridViewRowPostPaintEventArgs e, DataGridView grid)
+        {
+            var rowIndex = (e.RowIndex + 1).ToString();
+            var centerFormat = new StringFormat()
+            {
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Center
+            };
+
+            var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
+            e.Graphics.DrawString(rowIndex, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
+        }
     }
 }

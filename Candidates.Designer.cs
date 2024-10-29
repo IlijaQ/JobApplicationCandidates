@@ -49,14 +49,14 @@
             this.btnEnableFilterUpdatedBefore = new Krypton.Toolkit.KryptonButton();
             this.tbJmbg = new Krypton.Toolkit.KryptonTextBox();
             this.gbNameJmbgFilters = new Krypton.Toolkit.KryptonGroupBox();
-            this.btnResetNameJmbgFilters = new Krypton.Toolkit.KryptonButton();
             this.kryptonLabel2 = new Krypton.Toolkit.KryptonLabel();
+            this.btnResetNameJmbgFilters = new Krypton.Toolkit.KryptonButton();
             this.btnResetAllFilters = new Krypton.Toolkit.KryptonButton();
             this.btnSearch = new Krypton.Toolkit.KryptonButton();
             this.btnNewCandidate = new Krypton.Toolkit.KryptonButton();
             this.SearchPanel = new Krypton.Toolkit.KryptonPanel();
-            this.kryptonProgressBar1 = new Krypton.Toolkit.KryptonProgressBar();
             this.lblSearch = new Krypton.Toolkit.KryptonLabel();
+            this.kryptonProgressBar1 = new Krypton.Toolkit.KryptonProgressBar();
             this.bgwGetCandidates = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandidates)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbStatus)).BeginInit();
@@ -78,8 +78,8 @@
             // 
             // dgvCandidates
             // 
-            this.dgvCandidates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.dgvCandidates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCandidates.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvCandidates.ColumnHeadersHeight = 36;
@@ -89,6 +89,7 @@
             this.dgvCandidates.RowTemplate.Height = 24;
             this.dgvCandidates.Size = new System.Drawing.Size(1298, 391);
             this.dgvCandidates.TabIndex = 0;
+            this.dgvCandidates.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvCandidates_RowPostPaint);
             // 
             // btnClose
             // 
@@ -339,6 +340,14 @@
             this.gbNameJmbgFilters.Size = new System.Drawing.Size(484, 146);
             this.gbNameJmbgFilters.TabIndex = 13;
             // 
+            // kryptonLabel2
+            // 
+            this.kryptonLabel2.Location = new System.Drawing.Point(23, 82);
+            this.kryptonLabel2.Name = "kryptonLabel2";
+            this.kryptonLabel2.Size = new System.Drawing.Size(299, 24);
+            this.kryptonLabel2.TabIndex = 14;
+            this.kryptonLabel2.Values.Text = "Leave empty textbox(es) to disable filter(s)";
+            // 
             // btnResetNameJmbgFilters
             // 
             this.btnResetNameJmbgFilters.Location = new System.Drawing.Point(345, 79);
@@ -347,14 +356,6 @@
             this.btnResetNameJmbgFilters.TabIndex = 17;
             this.btnResetNameJmbgFilters.Values.Text = "Reset Filters";
             this.btnResetNameJmbgFilters.Click += new System.EventHandler(this.btnResetNameJmbgFilters_Click);
-            // 
-            // kryptonLabel2
-            // 
-            this.kryptonLabel2.Location = new System.Drawing.Point(23, 82);
-            this.kryptonLabel2.Name = "kryptonLabel2";
-            this.kryptonLabel2.Size = new System.Drawing.Size(299, 24);
-            this.kryptonLabel2.TabIndex = 14;
-            this.kryptonLabel2.Values.Text = "Leave empty textbox(es) to disable filter(s)";
             // 
             // btnResetAllFilters
             // 
@@ -394,6 +395,14 @@
             this.SearchPanel.StateCommon.Color1 = System.Drawing.Color.WhiteSmoke;
             this.SearchPanel.TabIndex = 17;
             // 
+            // lblSearch
+            // 
+            this.lblSearch.Location = new System.Drawing.Point(124, 13);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(116, 24);
+            this.lblSearch.TabIndex = 1;
+            this.lblSearch.Values.Text = "Fetching Data...";
+            // 
             // kryptonProgressBar1
             // 
             this.kryptonProgressBar1.Location = new System.Drawing.Point(24, 43);
@@ -406,14 +415,6 @@
             this.kryptonProgressBar1.TabIndex = 0;
             this.kryptonProgressBar1.Text = "Searching...";
             this.kryptonProgressBar1.Values.Text = "Searching...";
-            // 
-            // lblSearch
-            // 
-            this.lblSearch.Location = new System.Drawing.Point(124, 13);
-            this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(116, 24);
-            this.lblSearch.TabIndex = 1;
-            this.lblSearch.Values.Text = "Fetching Data...";
             // 
             // bgwGetCandidates
             // 
