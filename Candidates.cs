@@ -105,12 +105,6 @@ namespace CandidateLog
                     BindingList<DisplayCandidate> dgvDisplayableResults = BindData.BindCandidates(results);
                     dgvCandidates.DataSource = dgvDisplayableResults;
 
-
-                    
-                    // sortableList;
-                    //dgvCandidates.DataSource = bindingSource;
-                    //dgvCandidates.AutoGenerateColumns = true;
-
                     lblCount.Text = "Count: " + results.Count;
                     lblCount.Visible = true;
 

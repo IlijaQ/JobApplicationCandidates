@@ -41,17 +41,18 @@ namespace CandidateLog.Data
                 candidates = candidates.Where(id => id.Jmbg == filter.Jmbg);
 
             if (filter.LastUpdateFrom != null)
-                candidates = candidates.Where(d => d.LastUpdate > filter.LastUpdateFrom);
+                candidates = candidates.Where(d => d.LastUpdate >= filter.LastUpdateFrom);
             if (filter.LastUpdateFrom != null)
-                candidates = candidates.Where(d => d.LastUpdate < filter.LastUpdateTo);
+                candidates = candidates.Where(d => d.LastUpdate <= filter.LastUpdateTo);
 
             if (filter.RatingFrom != null)
-                candidates = candidates.Where(r => r.Rating > filter.RatingFrom);
+                candidates = candidates.Where(r => r.Rating >= filter.RatingFrom);
             if (filter.RatingTo != null)
-                candidates = candidates.Where(r => r.Rating < filter.RatingTo);
+                candidates = candidates.Where(r => r.Rating <= filter.RatingTo);
 
             if (filter.Status != null)
                 candidates = candidates.Where(s => s.Status == filter.Status);
+            
             return candidates;
         }
 
