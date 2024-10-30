@@ -58,6 +58,7 @@
             this.lblSearch = new Krypton.Toolkit.KryptonLabel();
             this.kryptonProgressBar1 = new Krypton.Toolkit.KryptonProgressBar();
             this.bgwGetCandidates = new System.ComponentModel.BackgroundWorker();
+            this.btnExportToXlsx = new Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandidates)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gbStatusAndRatingFilters)).BeginInit();
@@ -387,6 +388,7 @@
             this.btnNewCandidate.Size = new System.Drawing.Size(135, 26);
             this.btnNewCandidate.TabIndex = 16;
             this.btnNewCandidate.Values.Text = "New Candidate";
+            this.btnNewCandidate.Click += new System.EventHandler(this.btnNewCandidate_Click);
             // 
             // SearchPanel
             // 
@@ -425,12 +427,24 @@
             this.bgwGetCandidates.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwGetCandidates_DoWork);
             this.bgwGetCandidates.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwGetCandidates_RunWorkerCompleted);
             // 
+            // btnExportToXlsx
+            // 
+            this.btnExportToXlsx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExportToXlsx.Location = new System.Drawing.Point(163, 613);
+            this.btnExportToXlsx.Name = "btnExportToXlsx";
+            this.btnExportToXlsx.Size = new System.Drawing.Size(125, 28);
+            this.btnExportToXlsx.TabIndex = 18;
+            this.btnExportToXlsx.Values.Text = "Export to xlsx";
+            this.btnExportToXlsx.Visible = false;
+            this.btnExportToXlsx.Click += new System.EventHandler(this.btnExportToXlsx_Click);
+            // 
             // Candidates
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1322, 653);
+            this.Controls.Add(this.btnExportToXlsx);
             this.Controls.Add(this.SearchPanel);
             this.Controls.Add(this.btnNewCandidate);
             this.Controls.Add(this.btnSearch);
@@ -500,6 +514,7 @@
         private Krypton.Toolkit.KryptonLabel lblSearch;
         private Krypton.Toolkit.KryptonProgressBar kryptonProgressBar1;
         private System.ComponentModel.BackgroundWorker bgwGetCandidates;
+        private Krypton.Toolkit.KryptonButton btnExportToXlsx;
     }
 }
 

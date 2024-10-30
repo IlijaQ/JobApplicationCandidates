@@ -1,6 +1,8 @@
 ﻿using CandidateLog.Data;
 using CandidateLog.Models;
 using CandidateLog.Resources;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Krypton.Toolkit;
 using System;
 using System.Collections.Generic;
@@ -105,8 +107,7 @@ namespace CandidateLog
                     BindingList<DisplayCandidate> dgvDisplayableResults = BindData.BindCandidates(results);
                     dgvCandidates.DataSource = dgvDisplayableResults;
 
-                    lblCount.Text = "Count: " + results.Count;
-                    lblCount.Visible = true;
+                    ShowRowCountRelatedUi(results);
 
                     FormatGridColumns();
 
@@ -120,11 +121,21 @@ namespace CandidateLog
             SearchPanel.Visible = false;
             SearchFilter = null;
         }
+
+        private void ShowRowCountRelatedUi(List<Candidate> results)
+        {
+            lblCount.Text = "Count: " + results.Count;
+            lblCount.Visible = true;
+            btnExportToXlsx.Visible = true;
+        }
+
         private void ZeroResultsUiChanges()
         {
             lblCount.Visible = false;
             SearchPanel.Visible = false;
+            btnExportToXlsx.Visible = false;
             SearchFilter = null;
+
             MessageBox.Show("No Candidates in the database.\r\nClick\"Create\" to insert new Candidates.",
                 "Information",
                 MessageBoxButtons.OK,
@@ -274,12 +285,12 @@ namespace CandidateLog
             string status = grid.Rows[e.RowIndex].Cells["Status"].Value.ToString();
             switch (status)
             {
-                case "Candidate": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White; break;
-                case "Qualified": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow; break;
-                case "Interview": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightSkyBlue; break;
-                case "ShortListed": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.IndianRed; break;
-                case "Employee": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.GreenYellow; break;
-                default: grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray; break;
+                case "Candidate": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.White; break;
+                case "Qualified": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.LightGoldenrodYellow; break;
+                case "Interview": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.LightSkyBlue; break;
+                case "ShortListed": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.IndianRed; break;
+                case "Employee": grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.GreenYellow; break;
+                default: grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.LightGray; break;
             }
         }
         private void DrawRowNumbers(DataGridViewRowPostPaintEventArgs e, DataGridView grid)
@@ -312,12 +323,58 @@ namespace CandidateLog
                 else
                 {
                     sortedList = bindingList.OrderByDescending(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
-                    LastSortedColumn = "purpously different to reverse sort order";
+                    LastSortedColumn = "purposely different to reverse sort order";
                 }
 
                 bindingList.Clear();
                 foreach (var item in sortedList)
                     bindingList.Add(item);
+            }
+        }
+
+        private void btnNewCandidate_Click(object sender, EventArgs e)
+        {
+            CreateCandidate dialog = new CreateCandidate();
+            dialog.ShowDialog();
+        }
+
+        private void btnExportToXlsx_Click(object sender, EventArgs e)
+        {
+            using(SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Excel Files|*.xlsx";
+                saveFileDialog.Title = "Export Candidates to Excel file (xlsx)";
+
+                if(saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+                    var workBook = new XLWorkbook();
+                    var workSheet = workBook.Worksheets.Add("Sheet1");
+
+                    for (int i = 0; i < dgvCandidates.Columns.Count - 1; i++)
+                        workSheet.Cell(1, i + 1).Value = dgvCandidates.Columns[i].HeaderText;
+
+                    for (int i = 0; i < dgvCandidates.Rows.Count; i++)
+                    {
+                        for(int j = 0; j < dgvCandidates.Columns.Count - 1; j++)
+                        {
+                            string cellValue = dgvCandidates.Rows[i].Cells[j].Value?.ToString();
+
+                            if(j == 6)
+                                cellValue = cellValue.Count(r => r == '*').ToString();
+
+                            workSheet.Cell(i + 2, j + 1).Value = cellValue;
+                        }
+                    }
+
+                    workSheet.Column(4).Width = 30;
+                    workSheet.Column(5).Width = 16;
+                    workSheet.Column(6).Width = 22;
+
+                    workBook.SaveAs(filePath);
+
+                    MessageBox.Show("Saved file\r\n" + filePath, "Success");
+                }
             }
         }
     }

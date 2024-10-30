@@ -1,0 +1,1 @@
+﻿Containing folder for document attachments - pdf, dox, docx, txt etc.

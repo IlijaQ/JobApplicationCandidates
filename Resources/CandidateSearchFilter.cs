@@ -11,10 +11,10 @@ namespace CandidateLog.Resources
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Jmbg { get; set; }
-        public DateTime LastUpdateFrom { get; set; }
-        public DateTime LastUpdateTo { get; set; }
-        public byte RatingFrom { get; set; }
-        public byte RatingTo { get; set; }
-        public byte Status { get; set; }
+        public DateTime? LastUpdateFrom { get; set; }
+        public DateTime? LastUpdateTo { get; set; }
+        public byte? RatingFrom { get; set; }
+        public byte? RatingTo { get; set; }
+        public byte? Status { get; set; }
     }
 }
