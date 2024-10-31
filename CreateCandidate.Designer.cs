@@ -45,7 +45,14 @@
             this.tbDocumentDragDropArea = new Krypton.Toolkit.KryptonTextBox();
             this.AttachmentDisplayPanel = new Krypton.Toolkit.KryptonPanel();
             this.tbPhotoDragDrop = new Krypton.Toolkit.KryptonTextBox();
+            this.btnAddLink = new Krypton.Toolkit.KryptonButton();
+            this.btnSave = new Krypton.Toolkit.KryptonButton();
+            this.btnCancel = new Krypton.Toolkit.KryptonButton();
+            this.kryptonTextBox1 = new Krypton.Toolkit.KryptonTextBox();
+            this.LinksPanel = new Krypton.Toolkit.KryptonPanel();
+            this.kryptonLabel8 = new Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LinksPanel)).BeginInit();
             this.SuspendLayout();
             // 
             // tbFirstName
@@ -99,6 +106,8 @@
             // 
             // tbAdditionalInfo
             // 
+            this.tbAdditionalInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tbAdditionalInfo.Location = new System.Drawing.Point(169, 314);
             this.tbAdditionalInfo.Multiline = true;
             this.tbAdditionalInfo.Name = "tbAdditionalInfo";
@@ -148,7 +157,7 @@
             // 
             // kryptonLabel6
             // 
-            this.kryptonLabel6.Location = new System.Drawing.Point(17, 314);
+            this.kryptonLabel6.Location = new System.Drawing.Point(21, 314);
             this.kryptonLabel6.Name = "kryptonLabel6";
             this.kryptonLabel6.Size = new System.Drawing.Size(113, 24);
             this.kryptonLabel6.TabIndex = 25;
@@ -190,7 +199,6 @@
             // tbPhotoDragDrop
             // 
             this.tbPhotoDragDrop.AllowDrop = true;
-            this.tbPhotoDragDrop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPhotoDragDrop.CueHint.CueHintText = "Drag and drop Photo  jpg/jpeg, png, bmp, webp";
             this.tbPhotoDragDrop.Location = new System.Drawing.Point(554, 80);
             this.tbPhotoDragDrop.Multiline = true;
@@ -201,11 +209,77 @@
             this.tbPhotoDragDrop.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbPhotoDragDrop_DragDrop);
             this.tbPhotoDragDrop.DragEnter += new System.Windows.Forms.DragEventHandler(this.tbPhotoDragDrop_DragEnter);
             // 
+            // btnAddLink
+            // 
+            this.btnAddLink.Location = new System.Drawing.Point(554, 273);
+            this.btnAddLink.Name = "btnAddLink";
+            this.btnAddLink.Size = new System.Drawing.Size(132, 29);
+            this.btnAddLink.TabIndex = 30;
+            this.btnAddLink.Values.Text = "Add Link";
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSave.Location = new System.Drawing.Point(21, 546);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(132, 32);
+            this.btnSave.TabIndex = 31;
+            this.btnSave.Values.Text = "Create";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Location = new System.Drawing.Point(1188, 546);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(132, 32);
+            this.btnCancel.TabIndex = 32;
+            this.btnCancel.Values.Text = "Cancel";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // kryptonTextBox1
+            // 
+            this.kryptonTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.kryptonTextBox1.CueHint.CueHintText = "Paste Link here and than click \"Add Link\" to queue it for new Candidate";
+            this.kryptonTextBox1.Location = new System.Drawing.Point(692, 275);
+            this.kryptonTextBox1.Name = "kryptonTextBox1";
+            this.kryptonTextBox1.Size = new System.Drawing.Size(627, 27);
+            this.kryptonTextBox1.TabIndex = 33;
+            // 
+            // LinksPanel
+            // 
+            this.LinksPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LinksPanel.AutoScroll = true;
+            this.LinksPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.LinksPanel.Location = new System.Drawing.Point(554, 314);
+            this.LinksPanel.Name = "LinksPanel";
+            this.LinksPanel.Size = new System.Drawing.Size(765, 206);
+            this.LinksPanel.TabIndex = 29;
+            this.LinksPanel.Visible = false;
+            // 
+            // kryptonLabel8
+            // 
+            this.kryptonLabel8.LabelStyle = Krypton.Toolkit.LabelStyle.BoldControl;
+            this.kryptonLabel8.Location = new System.Drawing.Point(21, 12);
+            this.kryptonLabel8.Name = "kryptonLabel8";
+            this.kryptonLabel8.Size = new System.Drawing.Size(173, 24);
+            this.kryptonLabel8.TabIndex = 34;
+            this.kryptonLabel8.Values.Text = "Create New Candidate";
+            // 
             // CreateCandidate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1332, 590);
+            this.Controls.Add(this.kryptonLabel8);
+            this.Controls.Add(this.LinksPanel);
+            this.Controls.Add(this.kryptonTextBox1);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnAddLink);
             this.Controls.Add(this.tbPhotoDragDrop);
             this.Controls.Add(this.AttachmentDisplayPanel);
             this.Controls.Add(this.tbDocumentDragDropArea);
@@ -223,9 +297,11 @@
             this.Controls.Add(this.tbFirstName);
             this.Controls.Add(this.tbJmbg);
             this.Controls.Add(this.tbLastName);
+            this.MinimumSize = new System.Drawing.Size(1350, 637);
             this.Name = "CreateCandidate";
-            this.Text = "CreateCandidate";
+            this.Text = "Create Candidate";
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LinksPanel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,5 +326,11 @@
         private Krypton.Toolkit.KryptonTextBox tbDocumentDragDropArea;
         private Krypton.Toolkit.KryptonPanel AttachmentDisplayPanel;
         private Krypton.Toolkit.KryptonTextBox tbPhotoDragDrop;
+        private Krypton.Toolkit.KryptonButton btnAddLink;
+        private Krypton.Toolkit.KryptonButton btnSave;
+        private Krypton.Toolkit.KryptonButton btnCancel;
+        private Krypton.Toolkit.KryptonTextBox kryptonTextBox1;
+        private Krypton.Toolkit.KryptonPanel LinksPanel;
+        private Krypton.Toolkit.KryptonLabel kryptonLabel8;
     }
 }
