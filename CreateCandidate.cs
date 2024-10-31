@@ -46,6 +46,10 @@ namespace CandidateLog
 
         private void tbDocumentDragDropArea_DragEnter(object sender, DragEventArgs e)
         {
+            CursorIconIsElementDropable(e);
+        }
+        private static void CursorIconIsElementDropable(DragEventArgs e)
+        {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
             else
@@ -60,8 +64,8 @@ namespace CandidateLog
                 if (files.Length > 0)
                 {
                     string filePath = files[0];
-                    string fileName = Path.GetFileName(filePath);
                     FileInfo fileInfo = new FileInfo(filePath);
+                    string fileName = fileInfo.Name;
 
                     if (fileInfo.Length > 1024000)
                     {
@@ -71,7 +75,7 @@ namespace CandidateLog
 
                     FilesPathName.Add(filePath, fileName);
 
-                    string destinationPath = @".\..\..\AttachmentContainer\" + fileName;
+                    string destinationPath = @".\..\..\Files\AttachmentContainer\" + fileName;
                     File.Copy(filePath, destinationPath);
 
                     RefreshAttachmentDisplayPanel();
@@ -92,12 +96,66 @@ namespace CandidateLog
                     Location = new Point(10, yOffset),
                     AutoSize = true,
                     BackColor = System.Drawing.Color.Transparent,
-                    Font = new System.Drawing.Font("Liberation Serif", 9)
+                    Font = new System.Drawing.Font("Times New Roman", 12)
                 };
 
                 AttachmentDisplayPanel.Controls.Add(label);
                 yOffset += label.Height + 10;
             }
+        }
+
+        private void tbPhotoDragDrop_DragEnter(object sender, DragEventArgs e)
+        {
+            CursorIconIsElementDropable(e);
+        }
+
+        private void tbPhotoDragDrop_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.Length > 0)
+                {
+                    string filePath = files[0];
+                    FileInfo fileInfo = new FileInfo(filePath);
+                    string fileName = fileInfo.Name;
+                    string fileExtension = fileInfo.Extension.ToLower();
+
+                    if (!IsPhotoExtensionAllowed(fileExtension))
+                    {
+                        MessageBox.Show("Invalid file format.\r\nPlease upload a jpg/jpeg, png, bmp or webp file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (fileInfo.Length > 2048000)
+                    {
+                        MessageBox.Show("File must be less than 2 mb.", "File to large", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    FilesPathName.Add(filePath, fileName);
+
+                    string destinationPath = @".\..\..\Files\ImageContainer\" + fileName;
+                    File.Copy(filePath, destinationPath);
+
+                    tbPhotoDragDrop.Text = "Photo uploaded\r\n" + fileName;
+                }
+            }
+        }
+        private bool IsPhotoExtensionAllowed(string fileExtension)
+        {
+            string[] allowedExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".webp" };
+            bool extensionAllowed = false;
+
+            foreach (string extension in allowedExtensions)
+            {
+                if (extension == fileExtension)
+                {
+                    extensionAllowed = true;
+                    break;
+                }
+            }
+
+            return extensionAllowed;
         }
     }
 }

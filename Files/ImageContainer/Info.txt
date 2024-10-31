@@ -1,0 +1,1 @@
+﻿Containing folder for photo attachments - png, jpg, jpeg, bmp, webp

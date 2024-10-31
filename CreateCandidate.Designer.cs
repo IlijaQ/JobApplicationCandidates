@@ -44,6 +44,7 @@
             this.kryptonLabel7 = new Krypton.Toolkit.KryptonLabel();
             this.tbDocumentDragDropArea = new Krypton.Toolkit.KryptonTextBox();
             this.AttachmentDisplayPanel = new Krypton.Toolkit.KryptonPanel();
+            this.tbPhotoDragDrop = new Krypton.Toolkit.KryptonTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).BeginInit();
             this.SuspendLayout();
             // 
@@ -178,6 +179,7 @@
             // AttachmentDisplayPanel
             // 
             this.AttachmentDisplayPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.AttachmentDisplayPanel.AutoScroll = true;
             this.AttachmentDisplayPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AttachmentDisplayPanel.Location = new System.Drawing.Point(1047, 80);
             this.AttachmentDisplayPanel.Name = "AttachmentDisplayPanel";
@@ -185,11 +187,26 @@
             this.AttachmentDisplayPanel.TabIndex = 28;
             this.AttachmentDisplayPanel.Visible = false;
             // 
+            // tbPhotoDragDrop
+            // 
+            this.tbPhotoDragDrop.AllowDrop = true;
+            this.tbPhotoDragDrop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbPhotoDragDrop.CueHint.CueHintText = "Drag and drop Photo  jpg/jpeg, png, bmp, webp";
+            this.tbPhotoDragDrop.Location = new System.Drawing.Point(554, 80);
+            this.tbPhotoDragDrop.Multiline = true;
+            this.tbPhotoDragDrop.Name = "tbPhotoDragDrop";
+            this.tbPhotoDragDrop.ReadOnly = true;
+            this.tbPhotoDragDrop.Size = new System.Drawing.Size(183, 150);
+            this.tbPhotoDragDrop.TabIndex = 29;
+            this.tbPhotoDragDrop.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbPhotoDragDrop_DragDrop);
+            this.tbPhotoDragDrop.DragEnter += new System.Windows.Forms.DragEventHandler(this.tbPhotoDragDrop_DragEnter);
+            // 
             // CreateCandidate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1332, 590);
+            this.Controls.Add(this.tbPhotoDragDrop);
             this.Controls.Add(this.AttachmentDisplayPanel);
             this.Controls.Add(this.tbDocumentDragDropArea);
             this.Controls.Add(this.kryptonLabel7);
@@ -232,5 +249,6 @@
         private Krypton.Toolkit.KryptonLabel kryptonLabel7;
         private Krypton.Toolkit.KryptonTextBox tbDocumentDragDropArea;
         private Krypton.Toolkit.KryptonPanel AttachmentDisplayPanel;
+        private Krypton.Toolkit.KryptonTextBox tbPhotoDragDrop;
     }
 }
