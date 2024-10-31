@@ -48,7 +48,7 @@
             this.btnAddLink = new Krypton.Toolkit.KryptonButton();
             this.btnSave = new Krypton.Toolkit.KryptonButton();
             this.btnCancel = new Krypton.Toolkit.KryptonButton();
-            this.kryptonTextBox1 = new Krypton.Toolkit.KryptonTextBox();
+            this.tbAddLink = new Krypton.Toolkit.KryptonTextBox();
             this.LinksPanel = new Krypton.Toolkit.KryptonPanel();
             this.kryptonLabel8 = new Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).BeginInit();
@@ -216,6 +216,7 @@
             this.btnAddLink.Size = new System.Drawing.Size(132, 29);
             this.btnAddLink.TabIndex = 30;
             this.btnAddLink.Values.Text = "Add Link";
+            this.btnAddLink.Click += new System.EventHandler(this.btnAddLink_Click);
             // 
             // btnSave
             // 
@@ -236,15 +237,15 @@
             this.btnCancel.Values.Text = "Cancel";
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // kryptonTextBox1
+            // tbAddLink
             // 
-            this.kryptonTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbAddLink.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.kryptonTextBox1.CueHint.CueHintText = "Paste Link here and than click \"Add Link\" to queue it for new Candidate";
-            this.kryptonTextBox1.Location = new System.Drawing.Point(692, 275);
-            this.kryptonTextBox1.Name = "kryptonTextBox1";
-            this.kryptonTextBox1.Size = new System.Drawing.Size(627, 27);
-            this.kryptonTextBox1.TabIndex = 33;
+            this.tbAddLink.CueHint.CueHintText = "Paste Link here and than click \"Add Link\" to queue it for new Candidate";
+            this.tbAddLink.Location = new System.Drawing.Point(692, 275);
+            this.tbAddLink.Name = "tbAddLink";
+            this.tbAddLink.Size = new System.Drawing.Size(627, 27);
+            this.tbAddLink.TabIndex = 33;
             // 
             // LinksPanel
             // 
@@ -276,7 +277,7 @@
             this.ClientSize = new System.Drawing.Size(1332, 590);
             this.Controls.Add(this.kryptonLabel8);
             this.Controls.Add(this.LinksPanel);
-            this.Controls.Add(this.kryptonTextBox1);
+            this.Controls.Add(this.tbAddLink);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnAddLink);
@@ -329,7 +330,7 @@
         private Krypton.Toolkit.KryptonButton btnAddLink;
         private Krypton.Toolkit.KryptonButton btnSave;
         private Krypton.Toolkit.KryptonButton btnCancel;
-        private Krypton.Toolkit.KryptonTextBox kryptonTextBox1;
+        private Krypton.Toolkit.KryptonTextBox tbAddLink;
         private Krypton.Toolkit.KryptonPanel LinksPanel;
         private Krypton.Toolkit.KryptonLabel kryptonLabel8;
     }
