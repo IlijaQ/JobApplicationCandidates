@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,13 +18,17 @@ namespace CandidateLog
 {
     public partial class CreateCandidate : KryptonForm
     {
-        private Dictionary<string, string> FilesPathName {  get; set; }
+        private string[] PhotoNamePath { get; set; }
+        private Dictionary<string, string> FilesNamePath {  get; set; }
         private List<string> CandidateLinks { get; set; }
 
         public CreateCandidate()
         {
             InitializeComponent();
-            FilesPathName = new Dictionary<string, string>();
+            var statuses = Enum.GetValues(typeof(Resources.Status)).Cast<Resources.Status>().Skip(1).ToList(); // "All"
+            cbStatus.DataSource = statuses;
+            PhotoNamePath = new string[2];
+            FilesNamePath = new Dictionary<string, string>();
             CandidateLinks = new List<string>();
         }
 
@@ -46,8 +51,8 @@ namespace CandidateLog
             birthToJmbg = birthToJmbg.Remove(4, 1);
             return birthToJmbg;
         }
-
-        private void tbDocumentDragDropArea_DragEnter(object sender, DragEventArgs e)
+        
+        private void tbPhotoDragDrop_DragEnter(object sender, DragEventArgs e)
         {
             CursorIconIsElementDropable(e);
         }
@@ -57,57 +62,6 @@ namespace CandidateLog
                 e.Effect = DragDropEffects.Copy;
             else
                 e.Effect = DragDropEffects.None;
-        }
-
-        private void tbDocumentDragDropArea_DragDrop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files.Length > 0)
-                {
-                    string filePath = files[0];
-                    FileInfo fileInfo = new FileInfo(filePath);
-                    string fileName = fileInfo.Name;
-
-                    if (fileInfo.Length > 1024000)
-                    {
-                        MessageBox.Show("File must be less than 1 mb.", "File to large", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    FilesPathName.Add(filePath, fileName);
-
-                    string destinationPath = @".\..\..\Files\AttachmentContainer\" + fileName;
-                    File.Copy(filePath, destinationPath);
-
-                    RefreshAttachmentDisplayPanel();
-                }
-            }
-        }
-        private void RefreshAttachmentDisplayPanel()
-        {
-            AttachmentDisplayPanel.Visible = true;
-            AttachmentDisplayPanel.Controls.Clear();
-            int yOffset = 10;
-
-            foreach (var fileName in FilesPathName.Values)
-            {
-                KryptonLabel label = new KryptonLabel
-                {
-                    Text = fileName,
-                    Location = new Point(10, yOffset),
-                    AutoSize = true,
-                };
-
-                AttachmentDisplayPanel.Controls.Add(label);
-                yOffset += label.Height + 10;
-            }
-        }
-
-        private void tbPhotoDragDrop_DragEnter(object sender, DragEventArgs e)
-        {
-            CursorIconIsElementDropable(e);
         }
 
         private void tbPhotoDragDrop_DragDrop(object sender, DragEventArgs e)
@@ -133,12 +87,13 @@ namespace CandidateLog
                         return;
                     }
 
-                    FilesPathName.Add(filePath, fileName);
+                    PhotoNamePath[0] = fileName;
+                    PhotoNamePath[1] = filePath;
 
-                    string destinationPath = @".\..\..\Files\ImageContainer\" + fileName;
-                    File.Copy(filePath, destinationPath);
+                    //string destinationPath = @".\..\..\Files\ImageContainer\" + fileName;
+                    //File.Copy(filePath, destinationPath);
 
-                    tbPhotoDragDrop.Text = "Photo uploaded\r\n" + fileName;
+                    tbPhotoDragDrop.Text = "\r\n\r\n\r\nPhoto uploaded\r\n" + fileName;
                 }
             }
         }
@@ -159,9 +114,72 @@ namespace CandidateLog
             return extensionAllowed;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void tbDocumentDragDropArea_DragEnter(object sender, DragEventArgs e)
         {
-            this.Close();
+            CursorIconIsElementDropable(e);
+        }
+
+        private void tbDocumentDragDropArea_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.Length > 0)
+                {
+                    string filePath = files[0];
+                    FileInfo fileInfo = new FileInfo(filePath);
+                    string fileName = fileInfo.Name;
+
+                    if (fileInfo.Length > 1024000)
+                    {
+                        MessageBox.Show("File must be less than 1 mb.", "File to large", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    FilesNamePath.Add(fileName, filePath);
+
+                    //string destinationPath = @".\..\..\Files\AttachmentContainer\" + fileName;
+                    //File.Copy(filePath, destinationPath);
+
+                    RefreshAttachmentDisplayPanel();
+                }
+            }
+        }
+        private void RefreshAttachmentDisplayPanel()
+        {
+            AttachmentDisplayPanel.Visible = true;
+            AttachmentDisplayPanel.Controls.Clear();
+            int yOffset = 10;
+
+            foreach (var fileName in FilesNamePath.Keys)
+            {
+                KryptonButton removeFileButton = new KryptonButton
+                {
+                    Text = "x",
+                    Location = new Point(10, yOffset - 1),
+                    AutoSize = true,
+                    ToolTipValues = { EnableToolTips = true, Description = "remove file", Heading = string.Empty }
+                };
+
+                removeFileButton.Height = removeFileButton.Height - 5;
+                removeFileButton.Width = 16;
+                removeFileButton.Click += (sender, e) =>
+                {
+                    FilesNamePath.Remove(fileName);
+                    RefreshAttachmentDisplayPanel();
+                };
+
+                KryptonLabel label = new KryptonLabel
+                {
+                    Text = fileName,
+                    Location = new Point(removeFileButton.Right + 7, yOffset),
+                    AutoSize = true,
+                };
+
+                AttachmentDisplayPanel.Controls.Add(removeFileButton);
+                AttachmentDisplayPanel.Controls.Add(label);
+                yOffset += label.Height + 10;
+            }
         }
 
         private void btnAddLink_Click(object sender, EventArgs e)
@@ -184,15 +202,28 @@ namespace CandidateLog
 
             foreach (var url in CandidateLinks)
             {
-                KryptonButton button = new KryptonButton
+                KryptonButton removeLinkButton = new KryptonButton
                 {
-                    Text = "Visit",
+                    Text = "x",
                     Location = new Point(10, yOffset - 1),
                     AutoSize = true,
+                    ToolTipValues = {EnableToolTips = true, Description = "remove link"}
                 };
 
-                button.Height = button.Height - 2;
-                button.Click += (sender, e) =>
+                removeLinkButton.Height = removeLinkButton.Height - 5;
+                removeLinkButton.Width = 16;
+                removeLinkButton.Click += (sender, e) => RemoveLinkAndRefreshPanel(url);
+
+                KryptonButton visitSiteButton = new KryptonButton
+                {
+                    Text = "Visit",
+                    Location = new Point(removeLinkButton.Right + 10, yOffset - 1),
+                    AutoSize = true
+                };
+
+                visitSiteButton.Height = removeLinkButton.Height;
+                visitSiteButton.Width = 64;
+                visitSiteButton.Click += (sender, e) =>
                 {
                     try
                     {
@@ -200,7 +231,14 @@ namespace CandidateLog
                     }
                     catch
                     {
-                        InformUserUpdateUi(url);
+                        try
+                        {
+                            System.Diagnostics.Process.Start("www." + url);
+                        }
+                        catch
+                        {
+                            InformUserUpdateUi(url);
+                        }
                     }
                 };
 
@@ -208,25 +246,31 @@ namespace CandidateLog
                 {
                     Text = UpdateLabelIfLeadsToSotialNetwork(url),
                     ForeColor = System.Drawing.Color.White,
-                    Location = new Point(button.Right + 10, yOffset),
+                    Location = new Point(visitSiteButton.Right + 10, yOffset),
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 10)
                 };
 
-                LinksPanel.Controls.Add(button);
+                LinksPanel.Controls.Add(removeLinkButton);
+                LinksPanel.Controls.Add(visitSiteButton);
                 LinksPanel.Controls.Add(label);
 
-                yOffset += button.Height + 5;
+                yOffset += visitSiteButton.Height + 5;
             }
         }
         private void InformUserUpdateUi(string url)
         {
-            MessageBox.Show(
+            DialogResult dialog = MessageBox.Show(
                 "Could Not visit the dedicated link.\r\nPlease check the link and add it again\r\n\r\n" +
-                "This link will be removed from this list",
+                "Do you want to remove this link from the list?",
                 "Error",
-                MessageBoxButtons.OK,
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Error);
+
+            if (dialog == DialogResult.Yes)
+                RemoveLinkAndRefreshPanel(url);
+        }
+        private void RemoveLinkAndRefreshPanel(string url)
+        {
             CandidateLinks.Remove(url);
             RefreshLinkDisplayPanel();
         }
@@ -248,6 +292,11 @@ namespace CandidateLog
                 return "X account";
 
             return url;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

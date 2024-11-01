@@ -51,8 +51,13 @@
             this.tbAddLink = new Krypton.Toolkit.KryptonTextBox();
             this.LinksPanel = new Krypton.Toolkit.KryptonPanel();
             this.kryptonLabel8 = new Krypton.Toolkit.KryptonLabel();
+            this.kryptonLabel9 = new Krypton.Toolkit.KryptonLabel();
+            this.numRating = new Krypton.Toolkit.KryptonNumericUpDown();
+            this.kryptonLabel10 = new Krypton.Toolkit.KryptonLabel();
+            this.cbStatus = new Krypton.Toolkit.KryptonComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LinksPanel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbStatus)).BeginInit();
             this.SuspendLayout();
             // 
             // tbFirstName
@@ -176,11 +181,11 @@
             this.tbDocumentDragDropArea.AllowDrop = true;
             this.tbDocumentDragDropArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDocumentDragDropArea.CueHint.CueHintText = "Drag and drop CV, Cover letter and other documents here...";
-            this.tbDocumentDragDropArea.Location = new System.Drawing.Point(814, 80);
+            this.tbDocumentDragDropArea.Location = new System.Drawing.Point(770, 80);
             this.tbDocumentDragDropArea.Multiline = true;
             this.tbDocumentDragDropArea.Name = "tbDocumentDragDropArea";
             this.tbDocumentDragDropArea.ReadOnly = true;
-            this.tbDocumentDragDropArea.Size = new System.Drawing.Size(227, 150);
+            this.tbDocumentDragDropArea.Size = new System.Drawing.Size(220, 150);
             this.tbDocumentDragDropArea.TabIndex = 27;
             this.tbDocumentDragDropArea.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbDocumentDragDropArea_DragDrop);
             this.tbDocumentDragDropArea.DragEnter += new System.Windows.Forms.DragEventHandler(this.tbDocumentDragDropArea_DragEnter);
@@ -190,9 +195,9 @@
             this.AttachmentDisplayPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.AttachmentDisplayPanel.AutoScroll = true;
             this.AttachmentDisplayPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.AttachmentDisplayPanel.Location = new System.Drawing.Point(1047, 80);
+            this.AttachmentDisplayPanel.Location = new System.Drawing.Point(996, 80);
             this.AttachmentDisplayPanel.Name = "AttachmentDisplayPanel";
-            this.AttachmentDisplayPanel.Size = new System.Drawing.Size(273, 150);
+            this.AttachmentDisplayPanel.Size = new System.Drawing.Size(324, 150);
             this.AttachmentDisplayPanel.TabIndex = 28;
             this.AttachmentDisplayPanel.Visible = false;
             // 
@@ -204,8 +209,9 @@
             this.tbPhotoDragDrop.Multiline = true;
             this.tbPhotoDragDrop.Name = "tbPhotoDragDrop";
             this.tbPhotoDragDrop.ReadOnly = true;
-            this.tbPhotoDragDrop.Size = new System.Drawing.Size(183, 150);
+            this.tbPhotoDragDrop.Size = new System.Drawing.Size(199, 150);
             this.tbPhotoDragDrop.TabIndex = 29;
+            this.tbPhotoDragDrop.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbPhotoDragDrop.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbPhotoDragDrop_DragDrop);
             this.tbPhotoDragDrop.DragEnter += new System.Windows.Forms.DragEventHandler(this.tbPhotoDragDrop_DragEnter);
             // 
@@ -269,12 +275,70 @@
             this.kryptonLabel8.TabIndex = 34;
             this.kryptonLabel8.Values.Text = "Create New Candidate";
             // 
+            // kryptonLabel9
+            // 
+            this.kryptonLabel9.Location = new System.Drawing.Point(554, 12);
+            this.kryptonLabel9.Name = "kryptonLabel9";
+            this.kryptonLabel9.Size = new System.Drawing.Size(55, 24);
+            this.kryptonLabel9.TabIndex = 35;
+            this.kryptonLabel9.Values.Text = "Rating";
+            // 
+            // numRating
+            // 
+            this.numRating.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numRating.Location = new System.Drawing.Point(636, 10);
+            this.numRating.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numRating.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numRating.Name = "numRating";
+            this.numRating.Size = new System.Drawing.Size(71, 26);
+            this.numRating.TabIndex = 36;
+            this.numRating.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // kryptonLabel10
+            // 
+            this.kryptonLabel10.Location = new System.Drawing.Point(744, 10);
+            this.kryptonLabel10.Name = "kryptonLabel10";
+            this.kryptonLabel10.Size = new System.Drawing.Size(53, 24);
+            this.kryptonLabel10.TabIndex = 37;
+            this.kryptonLabel10.Values.Text = "Status";
+            // 
+            // cbStatus
+            // 
+            this.cbStatus.DropDownWidth = 159;
+            this.cbStatus.IntegralHeight = false;
+            this.cbStatus.Location = new System.Drawing.Point(831, 10);
+            this.cbStatus.Name = "cbStatus";
+            this.cbStatus.Size = new System.Drawing.Size(159, 26);
+            this.cbStatus.StateCommon.ComboBox.Content.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near;
+            this.cbStatus.TabIndex = 38;
+            this.cbStatus.Text = "Candidate";
+            // 
             // CreateCandidate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1332, 590);
+            this.Controls.Add(this.cbStatus);
+            this.Controls.Add(this.kryptonLabel10);
+            this.Controls.Add(this.numRating);
+            this.Controls.Add(this.kryptonLabel9);
             this.Controls.Add(this.kryptonLabel8);
             this.Controls.Add(this.LinksPanel);
             this.Controls.Add(this.tbAddLink);
@@ -303,6 +367,7 @@
             this.Text = "Create Candidate";
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LinksPanel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbStatus)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -333,5 +398,9 @@
         private Krypton.Toolkit.KryptonTextBox tbAddLink;
         private Krypton.Toolkit.KryptonPanel LinksPanel;
         private Krypton.Toolkit.KryptonLabel kryptonLabel8;
+        private Krypton.Toolkit.KryptonLabel kryptonLabel9;
+        private Krypton.Toolkit.KryptonNumericUpDown numRating;
+        private Krypton.Toolkit.KryptonLabel kryptonLabel10;
+        private Krypton.Toolkit.KryptonComboBox cbStatus;
     }
 }
