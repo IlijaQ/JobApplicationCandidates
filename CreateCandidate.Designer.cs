@@ -232,6 +232,7 @@
             this.btnSave.Size = new System.Drawing.Size(132, 32);
             this.btnSave.TabIndex = 31;
             this.btnSave.Values.Text = "Create";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 

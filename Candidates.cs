@@ -334,7 +334,7 @@ namespace CandidateLog
 
         private void btnNewCandidate_Click(object sender, EventArgs e)
         {
-            CreateCandidate dialog = new CreateCandidate();
+            CreateCandidate dialog = new CreateCandidate(this);
             dialog.ShowDialog();
         }
 

@@ -11,6 +11,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CandidateLog.Data;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Krypton.Toolkit;
 
@@ -18,13 +19,15 @@ namespace CandidateLog
 {
     public partial class CreateCandidate : KryptonForm
     {
+        private Candidates PreviousForm { get; }
         private string[] PhotoNamePath { get; set; }
         private Dictionary<string, string> FilesNamePath {  get; set; }
         private List<string> CandidateLinks { get; set; }
 
-        public CreateCandidate()
+        public CreateCandidate(Candidates candidatesIndex)
         {
             InitializeComponent();
+            PreviousForm = candidatesIndex;
             var statuses = Enum.GetValues(typeof(Resources.Status)).Cast<Resources.Status>().Skip(1).ToList(); // "All"
             cbStatus.DataSource = statuses;
             PhotoNamePath = new string[2];
@@ -292,6 +295,57 @@ namespace CandidateLog
                 return "X account";
 
             return url;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            //List<Models.Attachment> pendintAttachments = new List<Models.Attachment>();
+            //foreach(string key in FilesNamePath.Keys)
+            //{
+            //    pendintAttachments.Add(new Models.Attachment
+            //    {
+            //        FileName = key,
+            //        FilePath = FilesNamePath[key]
+            //    });
+
+            //}
+
+
+            Models.Candidate parameters = new Models.Candidate
+            {
+                Name = tbFirstName.Text,
+                LastName = tbLastName.Text,
+                Jmbg = tbJmbg.Text,
+                BirthDate = dtpBirthDate.Value,
+                Email = tbEmail.Text,
+                //Links = CandidateLinks,
+                PhoneNumber = tbPhoneNumber.Text,
+                AdditionalInfo = tbAdditionalInfo.Text,
+                LastUpdate = DateTime.Now,
+                //Attachments =
+                //PhotoFilePath = PhotoNamePath[1],
+                Rating = (byte)numRating.Value,
+                Status = (byte)(Resources.Status)cbStatus.SelectedItem
+
+
+            };
+
+
+            using (var db = new CandidateContext())
+            {
+                try
+                {
+                    var repo = new Repository(db);
+                    repo.CreateCandidate(parameters);
+
+                    PreviousForm.PopulateCandidatesGrid();
+                    this.Close();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            };
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
