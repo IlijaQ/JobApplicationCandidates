@@ -64,10 +64,13 @@ namespace CandidateLog.Data
                 .FirstOrDefault();
         }
 
-        public void CreateCandidate(Candidate candidate)
+        public int CreateCandidate(Candidate candidate)
         {
             _context.Candidates.Add(candidate);
             _context.SaveChanges();
+
+            int newCandidateId = candidate.Id;
+            return newCandidateId;
         }
 
         public bool UpdateCandidate(Candidate candidateWithUpdates)

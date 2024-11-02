@@ -39,13 +39,10 @@ namespace CandidateLog
         {
             if (string.IsNullOrEmpty(tbJmbg.Text))
                 tbJmbg.Text = GetFirstPartOfJmbgBasedOnBitrh();
-            else if(tbJmbg.Text.Length == 13)
-                tbJmbg.Text = GetFirstPartOfJmbgBasedOnBitrh() + tbJmbg.Text.Substring(7);
+            else if(tbJmbg.Text.Length <= 7)
+                tbJmbg.Text = GetFirstPartOfJmbgBasedOnBitrh();
             else
-                tbJmbg.Text = GetFirstPartOfJmbgBasedOnBitrh() + tbJmbg.Text;
-
-            if (tbJmbg.Text.Length > 13)
-                tbJmbg.Text = tbJmbg.Text.Substring(0, 13);
+                tbJmbg.Text = GetFirstPartOfJmbgBasedOnBitrh() + tbJmbg.Text.Substring(7);
         }
         private string GetFirstPartOfJmbgBasedOnBitrh()
         {
@@ -141,9 +138,6 @@ namespace CandidateLog
 
                     FilesNamePath.Add(fileName, filePath);
 
-                    //string destinationPath = @".\..\..\Files\AttachmentContainer\" + fileName;
-                    //File.Copy(filePath, destinationPath);
-
                     RefreshAttachmentDisplayPanel();
                 }
             }
@@ -194,7 +188,7 @@ namespace CandidateLog
             }
 
             CandidateLinks.Add(tbAddLink.Text.Trim());
-            tbAddLink.Text = String.Empty;
+            tbAddLink.Text = string.Empty;
             RefreshLinkDisplayPanel();
         }
         private void RefreshLinkDisplayPanel()
@@ -299,17 +293,9 @@ namespace CandidateLog
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //List<Models.Attachment> pendintAttachments = new List<Models.Attachment>();
-            //foreach(string key in FilesNamePath.Keys)
-            //{
-            //    pendintAttachments.Add(new Models.Attachment
-            //    {
-            //        FileName = key,
-            //        FilePath = FilesNamePath[key]
-            //    });
-
-            //}
-
+            List<Models.Link> pendingLinks = new List<Models.Link>();
+            foreach (string url in CandidateLinks)
+                pendingLinks.Add(new Models.Link { UrlPath = url });
 
             Models.Candidate parameters = new Models.Candidate
             {
@@ -318,34 +304,68 @@ namespace CandidateLog
                 Jmbg = tbJmbg.Text,
                 BirthDate = dtpBirthDate.Value,
                 Email = tbEmail.Text,
-                //Links = CandidateLinks,
+                Links = pendingLinks,
                 PhoneNumber = tbPhoneNumber.Text,
                 AdditionalInfo = tbAdditionalInfo.Text,
                 LastUpdate = DateTime.Now,
-                //Attachments =
                 //PhotoFilePath = PhotoNamePath[1],
                 Rating = (byte)numRating.Value,
                 Status = (byte)(Resources.Status)cbStatus.SelectedItem
-
-
             };
-
 
             using (var db = new CandidateContext())
             {
                 try
                 {
                     var repo = new Repository(db);
-                    repo.CreateCandidate(parameters);
+                    int newCandidateId = repo.CreateCandidate(parameters);
+
+                    string fileNamePrefix = newCandidateId.ToString() + parameters.Name[0] + parameters.LastName[0];
+
+                    AddAttachments(repo, fileNamePrefix);
+
+                    AddPhoto();
+
+                    MessageBox.Show("Candidate sucessfully added.\r\nID: " + newCandidateId,
+                        "Success",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                        );
 
                     PreviousForm.PopulateCandidatesGrid();
                     this.Close();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
+        }
+        private void AddAttachments(Repository repo, string fileNamePrefix)
+        {
+            try
+            {
+                List<Models.Attachment> pendintAttachments = new List<Models.Attachment>();
+                foreach (string nameKey in FilesNamePath.Keys)
+                {
+                    string destinationPath = @".\..\..\Files\AttachmentContainer\" + fileNamePrefix + nameKey;
+                    File.Copy(FilesNamePath[nameKey], destinationPath);
+
+                    repo.CreateAttachment(new Models.Attachment { FileName = nameKey, FilePath = destinationPath });
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Candidate added to database,\r\nError adding file attachmetns.\r\n\r\n" + ex.Message,
+                    "Error adding Attachments",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                    );
+            }
+        }
+        private void AddPhoto()
+        {
+            //TBD
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
