@@ -269,6 +269,9 @@
     <Compile Include="Resources\CandidateSearchFilter.cs" />
     <Compile Include="Resources\Enumerations.cs" />
     <Compile Include="Resources\SortableBindingList.cs" />
+    <EmbeddedResource Include="CandidateInfo.resx">
+      <DependentUpon>CandidateInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Candidates.resx">
       <DependentUpon>Candidates.cs</DependentUpon>
     </EmbeddedResource>
