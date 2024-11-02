@@ -28,7 +28,7 @@ namespace CandidateLog
         {
             InitializeComponent();
             PreviousForm = candidatesIndex;
-            var statuses = Enum.GetValues(typeof(Resources.Status)).Cast<Resources.Status>().Skip(1).ToList(); // "All"
+            var statuses = Enum.GetValues(typeof(Resources.Status)).Cast<Resources.Status>().Skip(1).ToList(); // "All" is skiped
             cbStatus.DataSource = statuses;
             PhotoNamePath = new string[2];
             FilesNamePath = new Dictionary<string, string>();

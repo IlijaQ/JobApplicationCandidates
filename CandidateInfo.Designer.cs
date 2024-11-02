@@ -37,7 +37,7 @@
             this.tbPhotoDragDrop = new Krypton.Toolkit.KryptonTextBox();
             this.AttachmentDisplayPanel = new Krypton.Toolkit.KryptonPanel();
             this.kryptonLabel7 = new Krypton.Toolkit.KryptonLabel();
-            this.kryptonLabel6 = new Krypton.Toolkit.KryptonLabel();
+            this.lblAdditionalInfo = new Krypton.Toolkit.KryptonLabel();
             this.kryptonLabel5 = new Krypton.Toolkit.KryptonLabel();
             this.kryptonLabel4 = new Krypton.Toolkit.KryptonLabel();
             this.kryptonLabel3 = new Krypton.Toolkit.KryptonLabel();
@@ -52,8 +52,14 @@
             this.lblPhone = new Krypton.Toolkit.KryptonLabel();
             this.lblStatus = new Krypton.Toolkit.KryptonLabel();
             this.lblRating = new Krypton.Toolkit.KryptonLabel();
+            this.bgwLoadCandidate = new System.ComponentModel.BackgroundWorker();
+            this.SearchPanel = new Krypton.Toolkit.KryptonPanel();
+            this.lblSearch = new Krypton.Toolkit.KryptonLabel();
+            this.kryptonProgressBar1 = new Krypton.Toolkit.KryptonProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.LinksPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchPanel)).BeginInit();
+            this.SearchPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // kryptonLabel10
@@ -141,14 +147,14 @@
             this.kryptonLabel7.TabIndex = 52;
             this.kryptonLabel7.Values.Text = "Last Name";
             // 
-            // kryptonLabel6
+            // lblAdditionalInfo
             // 
-            this.kryptonLabel6.Location = new System.Drawing.Point(17, 315);
-            this.kryptonLabel6.Name = "kryptonLabel6";
-            this.kryptonLabel6.Size = new System.Drawing.Size(113, 24);
-            this.kryptonLabel6.TabIndex = 51;
-            this.kryptonLabel6.Values.Text = "Additional Info";
-            this.kryptonLabel6.Visible = false;
+            this.lblAdditionalInfo.Location = new System.Drawing.Point(17, 315);
+            this.lblAdditionalInfo.Name = "lblAdditionalInfo";
+            this.lblAdditionalInfo.Size = new System.Drawing.Size(113, 24);
+            this.lblAdditionalInfo.TabIndex = 51;
+            this.lblAdditionalInfo.Values.Text = "Additional Info";
+            this.lblAdditionalInfo.Visible = false;
             // 
             // kryptonLabel5
             // 
@@ -197,6 +203,7 @@
             this.tbAdditionalInfo.Location = new System.Drawing.Point(165, 315);
             this.tbAdditionalInfo.Multiline = true;
             this.tbAdditionalInfo.Name = "tbAdditionalInfo";
+            this.tbAdditionalInfo.ReadOnly = true;
             this.tbAdditionalInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbAdditionalInfo.Size = new System.Drawing.Size(292, 206);
             this.tbAdditionalInfo.TabIndex = 45;
@@ -207,69 +214,63 @@
             this.lblFrstName.LabelStyle = Krypton.Toolkit.LabelStyle.BoldControl;
             this.lblFrstName.Location = new System.Drawing.Point(165, 84);
             this.lblFrstName.Name = "lblFrstName";
-            this.lblFrstName.Size = new System.Drawing.Size(46, 24);
+            this.lblFrstName.Size = new System.Drawing.Size(135, 24);
             this.lblFrstName.TabIndex = 66;
-            this.lblFrstName.Values.Text = "John";
-            this.lblFrstName.Visible = false;
+            this.lblFrstName.Values.Text = "no data available";
             // 
             // lblLastName
             // 
             this.lblLastName.LabelStyle = Krypton.Toolkit.LabelStyle.BoldControl;
             this.lblLastName.Location = new System.Drawing.Point(165, 117);
             this.lblLastName.Name = "lblLastName";
-            this.lblLastName.Size = new System.Drawing.Size(41, 24);
+            this.lblLastName.Size = new System.Drawing.Size(135, 24);
             this.lblLastName.TabIndex = 67;
-            this.lblLastName.Values.Text = "Doe";
-            this.lblLastName.Visible = false;
+            this.lblLastName.Values.Text = "no data available";
             // 
             // lblBirthDate
             // 
             this.lblBirthDate.LabelStyle = Krypton.Toolkit.LabelStyle.BoldControl;
             this.lblBirthDate.Location = new System.Drawing.Point(165, 151);
             this.lblBirthDate.Name = "lblBirthDate";
-            this.lblBirthDate.Size = new System.Drawing.Size(77, 24);
+            this.lblBirthDate.Size = new System.Drawing.Size(135, 24);
             this.lblBirthDate.TabIndex = 68;
-            this.lblBirthDate.Values.Text = "1.1.2000.";
-            this.lblBirthDate.Visible = false;
+            this.lblBirthDate.Values.Text = "no data available";
             // 
             // lblJmbg
             // 
             this.lblJmbg.LabelStyle = Krypton.Toolkit.LabelStyle.BoldControl;
             this.lblJmbg.Location = new System.Drawing.Point(165, 181);
             this.lblJmbg.Name = "lblJmbg";
-            this.lblJmbg.Size = new System.Drawing.Size(127, 24);
+            this.lblJmbg.Size = new System.Drawing.Size(135, 24);
             this.lblJmbg.TabIndex = 69;
-            this.lblJmbg.Values.Text = "0101000234567";
-            this.lblJmbg.Visible = false;
+            this.lblJmbg.Values.Text = "no data available";
             // 
             // lblEmail
             // 
             this.lblEmail.LabelStyle = Krypton.Toolkit.LabelStyle.BoldControl;
             this.lblEmail.Location = new System.Drawing.Point(165, 214);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(187, 24);
+            this.lblEmail.Size = new System.Drawing.Size(135, 24);
             this.lblEmail.TabIndex = 70;
-            this.lblEmail.Values.Text = "john.doe@example.com";
-            this.lblEmail.Visible = false;
+            this.lblEmail.Values.Text = "no data available";
             // 
             // lblPhone
             // 
             this.lblPhone.LabelStyle = Krypton.Toolkit.LabelStyle.BoldControl;
             this.lblPhone.Location = new System.Drawing.Point(165, 247);
             this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(129, 24);
+            this.lblPhone.Size = new System.Drawing.Size(135, 24);
             this.lblPhone.TabIndex = 71;
-            this.lblPhone.Values.Text = "+381641234567";
-            this.lblPhone.Visible = false;
+            this.lblPhone.Values.Text = "no data available";
             // 
             // lblStatus
             // 
             this.lblStatus.LabelStyle = Krypton.Toolkit.LabelStyle.BoldControl;
             this.lblStatus.Location = new System.Drawing.Point(639, 247);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(85, 24);
+            this.lblStatus.Size = new System.Drawing.Size(135, 24);
             this.lblStatus.TabIndex = 72;
-            this.lblStatus.Values.Text = "Candidate";
+            this.lblStatus.Values.Text = "no data available";
             // 
             // lblRating
             // 
@@ -279,12 +280,51 @@
             this.lblRating.Size = new System.Drawing.Size(64, 24);
             this.lblRating.TabIndex = 73;
             this.lblRating.Values.Text = "* * * * *";
+            this.lblRating.Visible = false;
+            // 
+            // bgwLoadCandidate
+            // 
+            this.bgwLoadCandidate.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwLoadCandidate_DoWork);
+            this.bgwLoadCandidate.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwLoadCandidate_RunWorkerCompleted);
+            // 
+            // SearchPanel
+            // 
+            this.SearchPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SearchPanel.Controls.Add(this.lblSearch);
+            this.SearchPanel.Controls.Add(this.kryptonProgressBar1);
+            this.SearchPanel.Location = new System.Drawing.Point(509, 247);
+            this.SearchPanel.Name = "SearchPanel";
+            this.SearchPanel.Size = new System.Drawing.Size(373, 85);
+            this.SearchPanel.StateCommon.Color1 = System.Drawing.Color.WhiteSmoke;
+            this.SearchPanel.TabIndex = 74;
+            // 
+            // lblSearch
+            // 
+            this.lblSearch.Location = new System.Drawing.Point(130, 13);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(116, 24);
+            this.lblSearch.TabIndex = 1;
+            this.lblSearch.Values.Text = "Fetching Data...";
+            // 
+            // kryptonProgressBar1
+            // 
+            this.kryptonProgressBar1.Location = new System.Drawing.Point(24, 43);
+            this.kryptonProgressBar1.Name = "kryptonProgressBar1";
+            this.kryptonProgressBar1.Size = new System.Drawing.Size(325, 27);
+            this.kryptonProgressBar1.StateCommon.Back.Color1 = System.Drawing.Color.Green;
+            this.kryptonProgressBar1.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.OneNote;
+            this.kryptonProgressBar1.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.OneNote;
+            this.kryptonProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.kryptonProgressBar1.TabIndex = 0;
+            this.kryptonProgressBar1.Text = "Searching...";
+            this.kryptonProgressBar1.Values.Text = "Searching...";
             // 
             // CandidateInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1332, 590);
+            this.Controls.Add(this.SearchPanel);
             this.Controls.Add(this.lblRating);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblPhone);
@@ -302,7 +342,7 @@
             this.Controls.Add(this.tbPhotoDragDrop);
             this.Controls.Add(this.AttachmentDisplayPanel);
             this.Controls.Add(this.kryptonLabel7);
-            this.Controls.Add(this.kryptonLabel6);
+            this.Controls.Add(this.lblAdditionalInfo);
             this.Controls.Add(this.kryptonLabel5);
             this.Controls.Add(this.kryptonLabel4);
             this.Controls.Add(this.kryptonLabel3);
@@ -311,9 +351,12 @@
             this.Controls.Add(this.tbAdditionalInfo);
             this.MinimumSize = new System.Drawing.Size(1350, 637);
             this.Name = "CandidateInfo";
-            this.Text = "CandidateInfo";
+            this.Text = "Details";
             ((System.ComponentModel.ISupportInitialize)(this.LinksPanel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SearchPanel)).EndInit();
+            this.SearchPanel.ResumeLayout(false);
+            this.SearchPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -329,7 +372,7 @@
         private Krypton.Toolkit.KryptonTextBox tbPhotoDragDrop;
         private Krypton.Toolkit.KryptonPanel AttachmentDisplayPanel;
         private Krypton.Toolkit.KryptonLabel kryptonLabel7;
-        private Krypton.Toolkit.KryptonLabel kryptonLabel6;
+        private Krypton.Toolkit.KryptonLabel lblAdditionalInfo;
         private Krypton.Toolkit.KryptonLabel kryptonLabel5;
         private Krypton.Toolkit.KryptonLabel kryptonLabel4;
         private Krypton.Toolkit.KryptonLabel kryptonLabel3;
@@ -344,5 +387,9 @@
         private Krypton.Toolkit.KryptonLabel lblPhone;
         private Krypton.Toolkit.KryptonLabel lblStatus;
         private Krypton.Toolkit.KryptonLabel lblRating;
+        private System.ComponentModel.BackgroundWorker bgwLoadCandidate;
+        private Krypton.Toolkit.KryptonPanel SearchPanel;
+        private Krypton.Toolkit.KryptonLabel lblSearch;
+        private Krypton.Toolkit.KryptonProgressBar kryptonProgressBar1;
     }
 }
