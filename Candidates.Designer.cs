@@ -93,6 +93,7 @@
             this.dgvCandidates.RowTemplate.Height = 24;
             this.dgvCandidates.Size = new System.Drawing.Size(1324, 391);
             this.dgvCandidates.TabIndex = 0;
+            this.dgvCandidates.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCandidates_CellContentClick);
             this.dgvCandidates.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCandidates_ColumnHeaderMouseClick);
             this.dgvCandidates.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvCandidates_RowPostPaint);
             // 

@@ -233,6 +233,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CandidateInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CandidateInfo.Designer.cs">
+      <DependentUpon>CandidateInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateCandidate.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -311,6 +311,9 @@ namespace CandidateLog
             var grid = sender as KryptonDataGridView;
             var columnName = grid.Columns[e.ColumnIndex].Name;
 
+            if (columnName == "ViewCandidate")
+                return;
+
             if (grid.DataSource is BindingList<DisplayCandidate> bindingList)
             {
                 List<DisplayCandidate> sortedList;
@@ -330,12 +333,6 @@ namespace CandidateLog
                 foreach (var item in sortedList)
                     bindingList.Add(item);
             }
-        }
-
-        private void btnNewCandidate_Click(object sender, EventArgs e)
-        {
-            CreateCandidate dialog = new CreateCandidate(this);
-            dialog.ShowDialog();
         }
 
         private void btnExportToXlsx_Click(object sender, EventArgs e)
@@ -376,6 +373,29 @@ namespace CandidateLog
                     MessageBox.Show("Saved file\r\n" + filePath, "Success");
                 }
             }
+        }
+
+        private void dgvCandidates_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+                return;
+
+            var column = e.ColumnIndex;
+
+            if (dgvCandidates.Columns[column].Name == "ViewCandidate")
+            {
+                var row = e.RowIndex;
+                int candidateId = (int)dgvCandidates.Rows[row].Cells["DatabaseId"].Value;
+
+                CandidateInfo dialog = new CandidateInfo(candidateId);
+                dialog.ShowDialog();
+            }
+        }
+
+        private void btnNewCandidate_Click(object sender, EventArgs e)
+        {
+            CreateCandidate dialog = new CreateCandidate(this);
+            dialog.ShowDialog();
         }
     }
 }
