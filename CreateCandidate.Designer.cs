@@ -204,7 +204,7 @@
             // tbPhotoDragDrop
             // 
             this.tbPhotoDragDrop.AllowDrop = true;
-            this.tbPhotoDragDrop.CueHint.CueHintText = "Drag and drop Photo  jpg/jpeg, png, bmp, webp";
+            this.tbPhotoDragDrop.CueHint.CueHintText = "Drag and drop Photo  jpg/jpeg, png, bmp";
             this.tbPhotoDragDrop.Location = new System.Drawing.Point(554, 80);
             this.tbPhotoDragDrop.Multiline = true;
             this.tbPhotoDragDrop.Name = "tbPhotoDragDrop";

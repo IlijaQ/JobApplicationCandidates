@@ -81,6 +81,7 @@ namespace CandidateLog.Data
                 return false;
 
             candidateExist.PhotoFilePath = newFilePath;
+            _context.SaveChanges();
             return true;
         }
 

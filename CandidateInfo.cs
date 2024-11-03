@@ -99,6 +99,19 @@ namespace CandidateLog
                 lblRating.Text = ConvertToStars(CandidateData.Rating);
                 lblRating.Visible = true;
             }
+
+            if (string.IsNullOrEmpty(CandidateData.PhotoFilePath))
+                lblPhotoNotUploaded.Visible = true;
+            else
+            {
+                PicturePanel.Controls.Clear();
+                PicturePanel.Controls.Add(new PictureBox
+                {
+                    ImageLocation = CandidateData.PhotoFilePath,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Dock = DockStyle.Fill
+                });
+            }
         }
         private string ConvertToStars(byte rating)
         {

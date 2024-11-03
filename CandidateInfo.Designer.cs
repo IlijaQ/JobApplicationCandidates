@@ -34,7 +34,6 @@
             this.LinksPanel = new Krypton.Toolkit.KryptonPanel();
             this.btnCancel = new Krypton.Toolkit.KryptonButton();
             this.btnEdit = new Krypton.Toolkit.KryptonButton();
-            this.tbPhotoDragDrop = new Krypton.Toolkit.KryptonTextBox();
             this.AttachmentDisplayPanel = new Krypton.Toolkit.KryptonPanel();
             this.kryptonLabel7 = new Krypton.Toolkit.KryptonLabel();
             this.lblAdditionalInfo = new Krypton.Toolkit.KryptonLabel();
@@ -56,10 +55,14 @@
             this.SearchPanel = new Krypton.Toolkit.KryptonPanel();
             this.lblSearch = new Krypton.Toolkit.KryptonLabel();
             this.kryptonProgressBar1 = new Krypton.Toolkit.KryptonProgressBar();
+            this.PicturePanel = new Krypton.Toolkit.KryptonPanel();
+            this.lblPhotoNotUploaded = new Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.LinksPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SearchPanel)).BeginInit();
             this.SearchPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicturePanel)).BeginInit();
+            this.PicturePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // kryptonLabel10
@@ -116,18 +119,6 @@
             this.btnEdit.Size = new System.Drawing.Size(132, 32);
             this.btnEdit.TabIndex = 58;
             this.btnEdit.Values.Text = "Edit";
-            // 
-            // tbPhotoDragDrop
-            // 
-            this.tbPhotoDragDrop.AllowDrop = true;
-            this.tbPhotoDragDrop.CueHint.CueHintText = "Drag and drop Photo  jpg/jpeg, png, bmp, webp";
-            this.tbPhotoDragDrop.Location = new System.Drawing.Point(550, 81);
-            this.tbPhotoDragDrop.Multiline = true;
-            this.tbPhotoDragDrop.Name = "tbPhotoDragDrop";
-            this.tbPhotoDragDrop.ReadOnly = true;
-            this.tbPhotoDragDrop.Size = new System.Drawing.Size(199, 150);
-            this.tbPhotoDragDrop.TabIndex = 55;
-            this.tbPhotoDragDrop.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // AttachmentDisplayPanel
             // 
@@ -317,11 +308,29 @@
             this.kryptonProgressBar1.Text = "Searching...";
             this.kryptonProgressBar1.Values.Text = "Searching...";
             // 
+            // PicturePanel
+            // 
+            this.PicturePanel.Controls.Add(this.lblPhotoNotUploaded);
+            this.PicturePanel.Location = new System.Drawing.Point(550, 81);
+            this.PicturePanel.Name = "PicturePanel";
+            this.PicturePanel.Size = new System.Drawing.Size(199, 150);
+            this.PicturePanel.TabIndex = 75;
+            // 
+            // lblPhotoNotUploaded
+            // 
+            this.lblPhotoNotUploaded.Location = new System.Drawing.Point(21, 60);
+            this.lblPhotoNotUploaded.Name = "lblPhotoNotUploaded";
+            this.lblPhotoNotUploaded.Size = new System.Drawing.Size(149, 24);
+            this.lblPhotoNotUploaded.TabIndex = 0;
+            this.lblPhotoNotUploaded.Values.Text = "photo not uploaded";
+            this.lblPhotoNotUploaded.Visible = false;
+            // 
             // CandidateInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1332, 590);
+            this.Controls.Add(this.PicturePanel);
             this.Controls.Add(this.SearchPanel);
             this.Controls.Add(this.lblRating);
             this.Controls.Add(this.lblStatus);
@@ -337,7 +346,6 @@
             this.Controls.Add(this.LinksPanel);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnEdit);
-            this.Controls.Add(this.tbPhotoDragDrop);
             this.Controls.Add(this.AttachmentDisplayPanel);
             this.Controls.Add(this.kryptonLabel7);
             this.Controls.Add(this.lblAdditionalInfo);
@@ -355,6 +363,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.SearchPanel)).EndInit();
             this.SearchPanel.ResumeLayout(false);
             this.SearchPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicturePanel)).EndInit();
+            this.PicturePanel.ResumeLayout(false);
+            this.PicturePanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -367,7 +378,6 @@
         private Krypton.Toolkit.KryptonPanel LinksPanel;
         private Krypton.Toolkit.KryptonButton btnCancel;
         private Krypton.Toolkit.KryptonButton btnEdit;
-        private Krypton.Toolkit.KryptonTextBox tbPhotoDragDrop;
         private Krypton.Toolkit.KryptonPanel AttachmentDisplayPanel;
         private Krypton.Toolkit.KryptonLabel kryptonLabel7;
         private Krypton.Toolkit.KryptonLabel lblAdditionalInfo;
@@ -389,5 +399,7 @@
         private Krypton.Toolkit.KryptonPanel SearchPanel;
         private Krypton.Toolkit.KryptonLabel lblSearch;
         private Krypton.Toolkit.KryptonProgressBar kryptonProgressBar1;
+        private Krypton.Toolkit.KryptonPanel PicturePanel;
+        private Krypton.Toolkit.KryptonLabel lblPhotoNotUploaded;
     }
 }

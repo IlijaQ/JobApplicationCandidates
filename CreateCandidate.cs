@@ -79,7 +79,7 @@ namespace CandidateLog
 
                     if (!IsPhotoExtensionAllowed(fileExtension))
                     {
-                        MessageBox.Show("Invalid file format.\r\nPlease upload a jpg/jpeg, png, bmp or webp file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Invalid picture format.\r\nPlease upload a jpg/jpeg, png or bmp file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     if (fileInfo.Length > 2048000)
@@ -97,7 +97,7 @@ namespace CandidateLog
         }
         private bool IsPhotoExtensionAllowed(string fileExtension)
         {
-            string[] allowedExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".webp" };
+            string[] allowedExtensions = { ".png", ".jpg", ".jpeg", ".bmp" };
             bool extensionAllowed = false;
 
             foreach (string extension in allowedExtensions)
@@ -294,7 +294,10 @@ namespace CandidateLog
                 return "Instagram account";
             if (urlLowerCase.Contains("threads"))
                 return "Threads account";
-            if (urlLowerCase.Contains("x.com") || urlLowerCase.Contains("twitter"))
+            if (urlLowerCase.Contains("/x.com")
+                || urlLowerCase.Contains(".x.com")
+                || urlLowerCase.IndexOf("x.com") == 0
+                || urlLowerCase.Contains("twitter"))
                 return "X account";
 
             return url;
@@ -317,7 +320,6 @@ namespace CandidateLog
                 PhoneNumber = tbPhoneNumber.Text,
                 AdditionalInfo = tbAdditionalInfo.Text,
                 LastUpdate = DateTime.Now,
-                //PhotoFilePath = PhotoNamePath[1],
                 Rating = (byte)numRating.Value,
                 Status = (byte)(Resources.Status)cbStatus.SelectedItem
             };

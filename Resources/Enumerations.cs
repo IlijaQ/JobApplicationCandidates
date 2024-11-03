@@ -18,6 +18,7 @@ namespace CandidateLog.Resources
 
     public enum FileType
     {
+        Other,
         Resume,
         CoverLetter,
         Certificate
