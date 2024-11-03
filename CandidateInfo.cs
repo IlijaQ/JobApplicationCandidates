@@ -1,4 +1,5 @@
 ﻿using CandidateLog.Data;
+using CandidateLog.FileViewers;
 using CandidateLog.Models;
 using CandidateLog.Resources;
 using Krypton.Toolkit;
@@ -6,9 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -54,6 +58,7 @@ namespace CandidateLog
                 {
                     var result = (Candidate)e.Result;
                     CandidateData = result;
+                    
                     FillUiWithResults();
                 }
                 catch(Exception ex )
@@ -218,6 +223,69 @@ namespace CandidateLog
         }
         private void DispayAttachments()
         {
+            AttachmentDisplayPanel.Visible = true;
+
+            int yOffset = 5;
+
+            foreach (var attachmentObject in CandidateData.Attachments)
+            {
+                KryptonButton openFileButton = new KryptonButton
+                {
+                    Text = "Open",
+                    Location = new Point(10, yOffset - 1),
+                    AutoSize = true
+                };
+
+                openFileButton.Height = openFileButton.Height - 5;
+                openFileButton.Width = 64;
+                openFileButton.Click += (sender, e) => OpenFile(attachmentObject);
+
+                string fileType = Enum.GetName(typeof(Resources.FileType), attachmentObject.Type);
+                fileType = fileType == "Other" ? string.Empty : $"[{fileType}]\t";
+
+                KryptonLabel label = new KryptonLabel
+                {
+                    Text = fileType + attachmentObject.FileName,
+                    Location = new Point(openFileButton.Right + 10, yOffset),
+                    AutoSize = true,
+                };
+
+                AttachmentDisplayPanel.Controls.Add(openFileButton);
+                AttachmentDisplayPanel.Controls.Add(label);
+
+                yOffset += openFileButton.Height + 5;
+            }
+        }
+
+        private static void OpenFile(Models.Attachment attachmentObject)
+        {
+            try
+            {
+                string extension = Path.GetExtension(attachmentObject.FilePath).ToLower();
+
+                switch (extension)
+                {
+                    case ".txt": TextFileView txt = new TextFileView(attachmentObject.FilePath); txt.ShowDialog(); break;
+                    case ".pdf": PdfFileViewer pdf = new PdfFileViewer(attachmentObject.FilePath); pdf.ShowDialog(); break;
+                    case ".png":
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".bmp": PhotoFileView img = new PhotoFileView(attachmentObject.FilePath); img.ShowDialog(); break;
+                    default:
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = attachmentObject.FilePath,
+                            UseShellExecute = true
+                        }); break;
+                }
+            }
+            catch (Exception ex)
+            {
+                DialogResult dialog = MessageBox.Show(
+                        $"File could not open.\r\n{ex.Message}",
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
             }
         }
     }

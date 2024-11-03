@@ -61,6 +61,7 @@ namespace CandidateLog.Data
             return _context.Candidates.Where(i => i.Id == id)
                 .Include(l => l.Links)
                 .Include(h => h.StatusHistories)
+                .Include(a => a.Attachments)
                 .FirstOrDefault();
         }
 

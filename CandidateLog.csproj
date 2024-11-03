@@ -77,6 +77,15 @@
     <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
     </Reference>
+    <Reference Include="Spire.Pdf, Version=10.7.21.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>packages\Spire.PDFViewer.7.12.23\lib\net48\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.PdfViewer.Asp, Version=7.12.23.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>packages\Spire.PDFViewer.7.12.23\lib\net48\Spire.PdfViewer.Asp.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.PdfViewer.Forms, Version=7.12.23.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>packages\Spire.PDFViewer.7.12.23\lib\net48\Spire.PdfViewer.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
@@ -252,6 +261,12 @@
     <Compile Include="Candidates.Designer.cs">
       <DependentUpon>Candidates.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileViewers\PdfFileViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileViewers\PdfFileViewer.Designer.cs">
+      <DependentUpon>PdfFileViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileViewers\TextFileView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +276,12 @@
     <Compile Include="Migrations\202410281231077_InitialCreate.cs" />
     <Compile Include="Migrations\202410281231077_InitialCreate.designer.cs">
       <DependentUpon>202410281231077_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileViewers\PhotoFileView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileViewers\PhotoFileView.Designer.cs">
+      <DependentUpon>PhotoFileView.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\Configuration.cs" />
     <Compile Include="Models\Attachment.cs" />
@@ -290,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateCandidate.resx">
       <DependentUpon>CreateCandidate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileViewers\PhotoFileView.resx">
+      <DependentUpon>PhotoFileView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileViewers\TextFileView.resx">
       <DependentUpon>TextFileView.cs</DependentUpon>
