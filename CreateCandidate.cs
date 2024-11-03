@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CandidateLog.Data;
+using CandidateLog.Models;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Krypton.Toolkit;
 
@@ -21,7 +22,7 @@ namespace CandidateLog
     {
         private Candidates PreviousForm { get; }
         private string[] PhotoNamePath { get; set; }
-        private Dictionary<string, string> FilesNamePath {  get; set; }
+        private Dictionary<Attachment, string> FilesAttachmentPath {  get; set; }
         private List<string> CandidateLinks { get; set; }
 
         public CreateCandidate(Candidates candidatesIndex)
@@ -31,7 +32,7 @@ namespace CandidateLog
             var statuses = Enum.GetValues(typeof(Resources.Status)).Cast<Resources.Status>().Skip(1).ToList(); // "All" is skiped
             cbStatus.DataSource = statuses;
             PhotoNamePath = new string[2];
-            FilesNamePath = new Dictionary<string, string>();
+            FilesAttachmentPath = new Dictionary<Attachment, string>();
             CandidateLinks = new List<string>();
         }
 
@@ -90,9 +91,6 @@ namespace CandidateLog
                     PhotoNamePath[0] = fileName;
                     PhotoNamePath[1] = filePath;
 
-                    //string destinationPath = @".\..\..\Files\ImageContainer\" + fileName;
-                    //File.Copy(filePath, destinationPath);
-
                     tbPhotoDragDrop.Text = "\r\n\r\n\r\nPhoto uploaded\r\n" + fileName;
                 }
             }
@@ -136,7 +134,12 @@ namespace CandidateLog
                         return;
                     }
 
-                    FilesNamePath.Add(fileName, filePath);
+                    Attachment attachment = new Attachment();
+                    attachment.FileName = fileName;
+                    SelectDocumentType dg = new SelectDocumentType(attachment);
+                    dg.Show();
+
+                    FilesAttachmentPath.Add(attachment, filePath);
 
                     RefreshAttachmentDisplayPanel();
                 }
@@ -148,7 +151,7 @@ namespace CandidateLog
             AttachmentDisplayPanel.Controls.Clear();
             int yOffset = 10;
 
-            foreach (var fileName in FilesNamePath.Keys)
+            foreach (Attachment attachment in FilesAttachmentPath.Keys)
             {
                 KryptonButton removeFileButton = new KryptonButton
                 {
@@ -162,13 +165,19 @@ namespace CandidateLog
                 removeFileButton.Width = 16;
                 removeFileButton.Click += (sender, e) =>
                 {
-                    FilesNamePath.Remove(fileName);
+                    FilesAttachmentPath.Remove(attachment);
                     RefreshAttachmentDisplayPanel();
+                };
+
+                KryptonComboBox comboBox = new KryptonComboBox
+                {
+                    DataSource = Enum.GetValues(typeof(Resources.FileType))
+
                 };
 
                 KryptonLabel label = new KryptonLabel
                 {
-                    Text = fileName,
+                    Text = attachment.FileName,
                     Location = new Point(removeFileButton.Right + 7, yOffset),
                     AutoSize = true,
                 };
@@ -322,9 +331,8 @@ namespace CandidateLog
 
                     string fileNamePrefix = newCandidateId.ToString() + parameters.Name[0] + parameters.LastName[0];
 
-                    AddAttachments(repo, fileNamePrefix);
-
-                    AddPhoto();
+                    AddAttachments(repo, newCandidateId, fileNamePrefix);
+                    AddPhoto(repo, newCandidateId, fileNamePrefix);
 
                     MessageBox.Show("Candidate sucessfully added.\r\nID: " + newCandidateId,
                         "Success",
@@ -341,33 +349,57 @@ namespace CandidateLog
                 }
             };
         }
-        private void AddAttachments(Repository repo, string fileNamePrefix)
+        private void AddAttachments(Repository repo, int id, string fileNamePrefix)
         {
             try
             {
-                List<Models.Attachment> pendintAttachments = new List<Models.Attachment>();
-                foreach (string nameKey in FilesNamePath.Keys)
+                foreach (Attachment attachment in FilesAttachmentPath.Keys)
                 {
-                    string destinationPath = @".\..\..\Files\AttachmentContainer\" + fileNamePrefix + nameKey;
-                    File.Copy(FilesNamePath[nameKey], destinationPath);
+                    string destinationPath = @".\..\..\Files\AttachmentContainer\" + fileNamePrefix + attachment.FileName;
+                    File.Copy(FilesAttachmentPath[attachment], destinationPath);
 
-                    repo.CreateAttachment(new Models.Attachment { FileName = nameKey, FilePath = destinationPath });
+                    attachment.CandidateId = id;
+                    attachment.FileName = fileNamePrefix + attachment.FileName;
+                    attachment.FilePath = destinationPath;
+                    attachment.LastUpdate = DateTime.Now;
+
+                    repo.CreateAttachment(attachment);
                 }
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Candidate added to database,\r\nError adding file attachmetns.\r\n\r\n" + ex.Message,
-                    "Error adding Attachments",
+                MessageBox.Show("Candidate added to database,\r\nError saving file attachmetns.\r\n\r\n" + ex.Message,
+                    "Error saving Attachments",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                     );
             }
         }
-        private void AddPhoto()
+        private void AddPhoto(Repository repo, int id, string fileNamePrefix)
         {
-            //TBD
-        }
+            if (string.IsNullOrEmpty(tbPhotoDragDrop.Text))
+                return;
 
+            try
+            {
+                string destinationPath = @".\..\..\Files\ImageContainer\" + fileNamePrefix + PhotoNamePath[0];
+                File.Copy(PhotoNamePath[1], destinationPath);
+
+                bool success = repo.UploadPhoto(id, destinationPath);
+
+                if(!success)
+                    MessageBox.Show("Error saving photo. Candidate not found.", "Error saving photo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Candidate added to database,\r\nError saving photo.\r\n\r\n" + ex.Message,
+                    "Error saving photo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                    );
+            }
+        }
+        
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();

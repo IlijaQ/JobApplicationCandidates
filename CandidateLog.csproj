@@ -269,6 +269,12 @@
     <Compile Include="Resources\CandidateSearchFilter.cs" />
     <Compile Include="Resources\Enumerations.cs" />
     <Compile Include="Resources\SortableBindingList.cs" />
+    <Compile Include="SelectDocumentType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectDocumentType.Designer.cs">
+      <DependentUpon>SelectDocumentType.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CandidateInfo.resx">
       <DependentUpon>CandidateInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -291,6 +297,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SelectDocumentType.resx">
+      <DependentUpon>SelectDocumentType.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

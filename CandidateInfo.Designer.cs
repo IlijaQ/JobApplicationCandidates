@@ -198,8 +198,6 @@
             // 
             // tbAdditionalInfo
             // 
-            this.tbAdditionalInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.tbAdditionalInfo.Location = new System.Drawing.Point(165, 315);
             this.tbAdditionalInfo.Multiline = true;
             this.tbAdditionalInfo.Name = "tbAdditionalInfo";

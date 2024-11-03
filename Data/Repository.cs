@@ -73,6 +73,17 @@ namespace CandidateLog.Data
             return newCandidateId;
         }
 
+        public bool UploadPhoto(int candidateId, string newFilePath)
+        {
+            var candidateExist = _context.Candidates.FirstOrDefault(i => i.Id == candidateId);
+
+            if (candidateExist == null)
+                return false;
+
+            candidateExist.PhotoFilePath = newFilePath;
+            return true;
+        }
+
         public bool UpdateCandidate(Candidate candidateWithUpdates)
         {
             var candidateExist = _context.Candidates.FirstOrDefault(i => i.Id == candidateWithUpdates.Id);

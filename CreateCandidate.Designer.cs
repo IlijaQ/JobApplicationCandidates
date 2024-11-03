@@ -185,7 +185,7 @@
             this.tbDocumentDragDropArea.Multiline = true;
             this.tbDocumentDragDropArea.Name = "tbDocumentDragDropArea";
             this.tbDocumentDragDropArea.ReadOnly = true;
-            this.tbDocumentDragDropArea.Size = new System.Drawing.Size(220, 150);
+            this.tbDocumentDragDropArea.Size = new System.Drawing.Size(204, 150);
             this.tbDocumentDragDropArea.TabIndex = 27;
             this.tbDocumentDragDropArea.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbDocumentDragDropArea_DragDrop);
             this.tbDocumentDragDropArea.DragEnter += new System.Windows.Forms.DragEventHandler(this.tbDocumentDragDropArea_DragEnter);
@@ -195,9 +195,9 @@
             this.AttachmentDisplayPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.AttachmentDisplayPanel.AutoScroll = true;
             this.AttachmentDisplayPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.AttachmentDisplayPanel.Location = new System.Drawing.Point(996, 80);
+            this.AttachmentDisplayPanel.Location = new System.Drawing.Point(980, 80);
             this.AttachmentDisplayPanel.Name = "AttachmentDisplayPanel";
-            this.AttachmentDisplayPanel.Size = new System.Drawing.Size(324, 150);
+            this.AttachmentDisplayPanel.Size = new System.Drawing.Size(340, 150);
             this.AttachmentDisplayPanel.TabIndex = 28;
             this.AttachmentDisplayPanel.Visible = false;
             // 
@@ -325,7 +325,7 @@
             this.cbStatus.IntegralHeight = false;
             this.cbStatus.Location = new System.Drawing.Point(831, 10);
             this.cbStatus.Name = "cbStatus";
-            this.cbStatus.Size = new System.Drawing.Size(159, 26);
+            this.cbStatus.Size = new System.Drawing.Size(143, 26);
             this.cbStatus.StateCommon.ComboBox.Content.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near;
             this.cbStatus.TabIndex = 38;
             this.cbStatus.Text = "Candidate";
