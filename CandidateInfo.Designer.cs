@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.kryptonLabel10 = new Krypton.Toolkit.KryptonLabel();
+            this.lblStatusHeader = new Krypton.Toolkit.KryptonLabel();
             this.kryptonLabel9 = new Krypton.Toolkit.KryptonLabel();
             this.lblCandidateId = new Krypton.Toolkit.KryptonLabel();
             this.LinksPanel = new Krypton.Toolkit.KryptonPanel();
@@ -57,6 +57,8 @@
             this.kryptonProgressBar1 = new Krypton.Toolkit.KryptonProgressBar();
             this.PicturePanel = new Krypton.Toolkit.KryptonPanel();
             this.lblPhotoNotUploaded = new Krypton.Toolkit.KryptonLabel();
+            this.lblLinksPanelHeader = new Krypton.Toolkit.KryptonLabel();
+            this.lblStatusHistoryViewInfo = new Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.LinksPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SearchPanel)).BeginInit();
@@ -65,13 +67,13 @@
             this.PicturePanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // kryptonLabel10
+            // lblStatusHeader
             // 
-            this.kryptonLabel10.Location = new System.Drawing.Point(550, 247);
-            this.kryptonLabel10.Name = "kryptonLabel10";
-            this.kryptonLabel10.Size = new System.Drawing.Size(53, 24);
-            this.kryptonLabel10.TabIndex = 64;
-            this.kryptonLabel10.Values.Text = "Status";
+            this.lblStatusHeader.Location = new System.Drawing.Point(550, 247);
+            this.lblStatusHeader.Name = "lblStatusHeader";
+            this.lblStatusHeader.Size = new System.Drawing.Size(53, 24);
+            this.lblStatusHeader.TabIndex = 64;
+            this.lblStatusHeader.Values.Text = "Status";
             // 
             // kryptonLabel9
             // 
@@ -101,6 +103,7 @@
             this.LinksPanel.Name = "LinksPanel";
             this.LinksPanel.Size = new System.Drawing.Size(765, 206);
             this.LinksPanel.TabIndex = 56;
+            this.LinksPanel.Visible = false;
             // 
             // btnCancel
             // 
@@ -122,13 +125,15 @@
             // 
             // AttachmentDisplayPanel
             // 
-            this.AttachmentDisplayPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.AttachmentDisplayPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.AttachmentDisplayPanel.AutoScroll = true;
             this.AttachmentDisplayPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AttachmentDisplayPanel.Location = new System.Drawing.Point(827, 81);
             this.AttachmentDisplayPanel.Name = "AttachmentDisplayPanel";
             this.AttachmentDisplayPanel.Size = new System.Drawing.Size(489, 150);
             this.AttachmentDisplayPanel.TabIndex = 54;
+            this.AttachmentDisplayPanel.Visible = false;
             // 
             // kryptonLabel7
             // 
@@ -325,11 +330,32 @@
             this.lblPhotoNotUploaded.Values.Text = "photo not uploaded";
             this.lblPhotoNotUploaded.Visible = false;
             // 
+            // lblLinksPanelHeader
+            // 
+            this.lblLinksPanelHeader.Location = new System.Drawing.Point(550, 285);
+            this.lblLinksPanelHeader.Name = "lblLinksPanelHeader";
+            this.lblLinksPanelHeader.Size = new System.Drawing.Size(119, 24);
+            this.lblLinksPanelHeader.TabIndex = 76;
+            this.lblLinksPanelHeader.Values.Text = "Dedicated links:";
+            this.lblLinksPanelHeader.Visible = false;
+            // 
+            // lblStatusHistoryViewInfo
+            // 
+            this.lblStatusHistoryViewInfo.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblStatusHistoryViewInfo.Location = new System.Drawing.Point(1033, 247);
+            this.lblStatusHistoryViewInfo.Name = "lblStatusHistoryViewInfo";
+            this.lblStatusHistoryViewInfo.Size = new System.Drawing.Size(282, 24);
+            this.lblStatusHistoryViewInfo.TabIndex = 77;
+            this.lblStatusHistoryViewInfo.Values.Text = "Hover over status to view status history.";
+            this.lblStatusHistoryViewInfo.Visible = false;
+            // 
             // CandidateInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1332, 590);
+            this.Controls.Add(this.lblStatusHistoryViewInfo);
+            this.Controls.Add(this.lblLinksPanelHeader);
             this.Controls.Add(this.PicturePanel);
             this.Controls.Add(this.SearchPanel);
             this.Controls.Add(this.lblRating);
@@ -340,7 +366,7 @@
             this.Controls.Add(this.lblBirthDate);
             this.Controls.Add(this.lblLastName);
             this.Controls.Add(this.lblFrstName);
-            this.Controls.Add(this.kryptonLabel10);
+            this.Controls.Add(this.lblStatusHeader);
             this.Controls.Add(this.kryptonLabel9);
             this.Controls.Add(this.lblCandidateId);
             this.Controls.Add(this.LinksPanel);
@@ -372,7 +398,7 @@
         }
 
         #endregion
-        private Krypton.Toolkit.KryptonLabel kryptonLabel10;
+        private Krypton.Toolkit.KryptonLabel lblStatusHeader;
         private Krypton.Toolkit.KryptonLabel kryptonLabel9;
         private Krypton.Toolkit.KryptonLabel lblCandidateId;
         private Krypton.Toolkit.KryptonPanel LinksPanel;
@@ -401,5 +427,7 @@
         private Krypton.Toolkit.KryptonProgressBar kryptonProgressBar1;
         private Krypton.Toolkit.KryptonPanel PicturePanel;
         private Krypton.Toolkit.KryptonLabel lblPhotoNotUploaded;
+        private Krypton.Toolkit.KryptonLabel lblLinksPanelHeader;
+        private Krypton.Toolkit.KryptonLabel lblStatusHistoryViewInfo;
     }
 }

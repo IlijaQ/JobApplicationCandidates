@@ -179,7 +179,6 @@
             // tbDocumentDragDropArea
             // 
             this.tbDocumentDragDropArea.AllowDrop = true;
-            this.tbDocumentDragDropArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDocumentDragDropArea.CueHint.CueHintText = "Drag and drop CV, Cover letter and other documents here...";
             this.tbDocumentDragDropArea.Location = new System.Drawing.Point(770, 80);
             this.tbDocumentDragDropArea.Multiline = true;
@@ -192,7 +191,8 @@
             // 
             // AttachmentDisplayPanel
             // 
-            this.AttachmentDisplayPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.AttachmentDisplayPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.AttachmentDisplayPanel.AutoScroll = true;
             this.AttachmentDisplayPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AttachmentDisplayPanel.Location = new System.Drawing.Point(980, 80);

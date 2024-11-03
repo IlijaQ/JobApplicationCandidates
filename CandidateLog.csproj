@@ -252,6 +252,12 @@
     <Compile Include="Candidates.Designer.cs">
       <DependentUpon>Candidates.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileViewers\TextFileView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileViewers\TextFileView.Designer.cs">
+      <DependentUpon>TextFileView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202410281231077_InitialCreate.cs" />
     <Compile Include="Migrations\202410281231077_InitialCreate.designer.cs">
       <DependentUpon>202410281231077_InitialCreate.cs</DependentUpon>
@@ -268,6 +274,7 @@
     <Compile Include="Resources\DisplayCandidate.cs" />
     <Compile Include="Resources\CandidateSearchFilter.cs" />
     <Compile Include="Resources\Enumerations.cs" />
+    <Compile Include="Resources\MiniTools.cs" />
     <Compile Include="Resources\SortableBindingList.cs" />
     <Compile Include="SelectDocumentType.cs">
       <SubType>Form</SubType>
@@ -283,6 +290,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateCandidate.resx">
       <DependentUpon>CreateCandidate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileViewers\TextFileView.resx">
+      <DependentUpon>TextFileView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202410281231077_InitialCreate.resx">
       <DependentUpon>202410281231077_InitialCreate.cs</DependentUpon>

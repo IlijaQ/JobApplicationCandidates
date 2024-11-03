@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CandidateLog.Data;
 using CandidateLog.Models;
+using CandidateLog.Resources;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Krypton.Toolkit;
 
@@ -147,8 +148,16 @@ namespace CandidateLog
         }
         private void RefreshAttachmentDisplayPanel()
         {
-            AttachmentDisplayPanel.Visible = true;
             AttachmentDisplayPanel.Controls.Clear();
+
+            if (FilesAttachmentPath.Count == 0)
+            {
+                AttachmentDisplayPanel.Visible = false;
+                return;
+            }
+
+            AttachmentDisplayPanel.Visible = true;
+            
             int yOffset = 10;
 
             foreach (Attachment attachment in FilesAttachmentPath.Keys)
@@ -202,8 +211,16 @@ namespace CandidateLog
         }
         private void RefreshLinkDisplayPanel()
         {
-            LinksPanel.Visible = true;
             LinksPanel.Controls.Clear();
+
+            if (CandidateLinks.Count == 0)
+            {
+                LinksPanel.Visible = false;
+                return;
+            }
+
+            LinksPanel.Visible = true;
+
             int yOffset = 5;
 
             foreach (var url in CandidateLinks)
@@ -250,7 +267,7 @@ namespace CandidateLog
 
                 KryptonLabel label = new KryptonLabel
                 {
-                    Text = UpdateLabelIfLeadsToSotialNetwork(url),
+                    Text = MiniTools.UpdateLabelIfLeadsToSotialNetwork(url),
                     ForeColor = System.Drawing.Color.White,
                     Location = new Point(visitSiteButton.Right + 10, yOffset),
                     AutoSize = true,
@@ -280,34 +297,16 @@ namespace CandidateLog
             CandidateLinks.Remove(url);
             RefreshLinkDisplayPanel();
         }
-        private string UpdateLabelIfLeadsToSotialNetwork(string url)
-        {
-            string urlLowerCase = url.ToLower();
-
-            if (urlLowerCase.Contains("linkedin"))
-                return "LinkedIn account";
-            if (urlLowerCase.Contains("github"))
-                return "GitHub account";
-            if (urlLowerCase.Contains("facebook"))
-                return "Facebook account";
-            if (urlLowerCase.Contains("instagram"))
-                return "Instagram account";
-            if (urlLowerCase.Contains("threads"))
-                return "Threads account";
-            if (urlLowerCase.Contains("/x.com")
-                || urlLowerCase.Contains(".x.com")
-                || urlLowerCase.IndexOf("x.com") == 0
-                || urlLowerCase.Contains("twitter"))
-                return "X account";
-
-            return url;
-        }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             List<Models.Link> pendingLinks = new List<Models.Link>();
             foreach (string url in CandidateLinks)
                 pendingLinks.Add(new Models.Link { UrlPath = url });
+
+            List<Models.StatusHistory> statusHistories = new List<Models.StatusHistory>();
+            byte currentStatus = (byte)(Resources.Status)cbStatus.SelectedItem;
+            statusHistories.Add(new Models.StatusHistory { Status = currentStatus, StatusUpdate = DateTime.Now });
 
             Models.Candidate parameters = new Models.Candidate
             {
@@ -321,7 +320,8 @@ namespace CandidateLog
                 AdditionalInfo = tbAdditionalInfo.Text,
                 LastUpdate = DateTime.Now,
                 Rating = (byte)numRating.Value,
-                Status = (byte)(Resources.Status)cbStatus.SelectedItem
+                Status = currentStatus,
+                StatusHistories = statusHistories
             };
 
             using (var db = new CandidateContext())
