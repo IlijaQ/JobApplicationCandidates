@@ -283,6 +283,12 @@
     <Compile Include="FileViewers\PhotoFileView.Designer.cs">
       <DependentUpon>PhotoFileView.cs</DependentUpon>
     </Compile>
+    <Compile Include="QuickDialogs\QuickEditRatingStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuickDialogs\QuickEditRatingStatus.Designer.cs">
+      <DependentUpon>QuickEditRatingStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Configuration.cs" />
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Candidate.cs" />
@@ -297,10 +303,10 @@
     <Compile Include="Resources\Enumerations.cs" />
     <Compile Include="Resources\MiniTools.cs" />
     <Compile Include="Resources\SortableBindingList.cs" />
-    <Compile Include="SelectDocumentType.cs">
+    <Compile Include="QuickDialogs\SelectDocumentType.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SelectDocumentType.Designer.cs">
+    <Compile Include="QuickDialogs\SelectDocumentType.Designer.cs">
       <DependentUpon>SelectDocumentType.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CandidateInfo.resx">
@@ -331,7 +337,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SelectDocumentType.resx">
+    <EmbeddedResource Include="QuickDialogs\QuickEditRatingStatus.resx">
+      <DependentUpon>QuickEditRatingStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuickDialogs\SelectDocumentType.resx">
       <DependentUpon>SelectDocumentType.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

@@ -1,5 +1,6 @@
 ﻿using CandidateLog.Data;
 using CandidateLog.Models;
+using CandidateLog.QuickDialogs;
 using CandidateLog.Resources;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -164,10 +165,18 @@ namespace CandidateLog
             dgvCandidates.Columns["Status"].Width = 80;
             dgvCandidates.Columns["Status"].MinimumWidth = 80;
 
+            KryptonDataGridViewButtonColumn editStatusRating = new KryptonDataGridViewButtonColumn();
+            editStatusRating.Name = "EditStatusRating";
+            editStatusRating.HeaderText = string.Empty;
+            editStatusRating.DefaultCellStyle.NullValue = "Edit Status/Rating";
+            editStatusRating.MinimumWidth = 120;
+            dgvCandidates.Columns.Add(editStatusRating);
+
             KryptonDataGridViewButtonColumn viewCandidate = new KryptonDataGridViewButtonColumn();
             viewCandidate.Name = "ViewCandidate";
             viewCandidate.HeaderText = string.Empty;
             viewCandidate.DefaultCellStyle.NullValue = "View Candidate";
+            viewCandidate.MinimumWidth = 110;
             dgvCandidates.Columns.Add(viewCandidate);
         }
 
@@ -381,13 +390,21 @@ namespace CandidateLog
                 return;
 
             var column = e.ColumnIndex;
+            var row = e.RowIndex;
 
             if (dgvCandidates.Columns[column].Name == "ViewCandidate")
             {
-                var row = e.RowIndex;
                 int candidateId = (int)dgvCandidates.Rows[row].Cells["DatabaseId"].Value;
 
                 CandidateInfo dialog = new CandidateInfo(candidateId);
+                dialog.ShowDialog();
+            }
+
+            if (dgvCandidates.Columns[column].Name == "EditStatusRating")
+            {
+                int candidateId = (int)dgvCandidates.Rows[row].Cells["DatabaseId"].Value;
+
+                QuickEditRatingStatus dialog = new QuickEditRatingStatus(this, candidateId);
                 dialog.ShowDialog();
             }
         }

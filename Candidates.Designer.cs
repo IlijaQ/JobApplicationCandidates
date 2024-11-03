@@ -91,7 +91,7 @@
             this.dgvCandidates.Name = "dgvCandidates";
             this.dgvCandidates.RowHeadersWidth = 51;
             this.dgvCandidates.RowTemplate.Height = 24;
-            this.dgvCandidates.Size = new System.Drawing.Size(1347, 391);
+            this.dgvCandidates.Size = new System.Drawing.Size(1520, 391);
             this.dgvCandidates.TabIndex = 0;
             this.dgvCandidates.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCandidates_CellContentClick);
             this.dgvCandidates.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCandidates_ColumnHeaderMouseClick);
@@ -100,7 +100,7 @@
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(1234, 613);
+            this.btnClose.Location = new System.Drawing.Point(1407, 613);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(125, 28);
             this.btnClose.TabIndex = 1;
@@ -229,7 +229,7 @@
             // gbStatusAndRatingFilters
             // 
             this.gbStatusAndRatingFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbStatusAndRatingFilters.Location = new System.Drawing.Point(958, 63);
+            this.gbStatusAndRatingFilters.Location = new System.Drawing.Point(1131, 63);
             this.gbStatusAndRatingFilters.Name = "gbStatusAndRatingFilters";
             // 
             // gbStatusAndRatingFilters.Panel
@@ -282,7 +282,7 @@
             // gbDateFilters
             // 
             this.gbDateFilters.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.gbDateFilters.Location = new System.Drawing.Point(526, 63);
+            this.gbDateFilters.Location = new System.Drawing.Point(613, 63);
             this.gbDateFilters.Name = "gbDateFilters";
             // 
             // gbDateFilters.Panel
@@ -366,7 +366,7 @@
             // btnResetAllFilters
             // 
             this.btnResetAllFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnResetAllFilters.Location = new System.Drawing.Point(1219, 12);
+            this.btnResetAllFilters.Location = new System.Drawing.Point(1392, 12);
             this.btnResetAllFilters.Name = "btnResetAllFilters";
             this.btnResetAllFilters.Size = new System.Drawing.Size(135, 26);
             this.btnResetAllFilters.TabIndex = 14;
@@ -396,7 +396,7 @@
             this.SearchPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SearchPanel.Controls.Add(this.lblSearch);
             this.SearchPanel.Controls.Add(this.kryptonProgressBar1);
-            this.SearchPanel.Location = new System.Drawing.Point(526, 332);
+            this.SearchPanel.Location = new System.Drawing.Point(613, 332);
             this.SearchPanel.Name = "SearchPanel";
             this.SearchPanel.Size = new System.Drawing.Size(361, 85);
             this.SearchPanel.StateCommon.Color1 = System.Drawing.Color.WhiteSmoke;
@@ -444,7 +444,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1371, 653);
+            this.ClientSize = new System.Drawing.Size(1544, 653);
             this.Controls.Add(this.btnExportToXlsx);
             this.Controls.Add(this.SearchPanel);
             this.Controls.Add(this.btnNewCandidate);

@@ -86,6 +86,22 @@ namespace CandidateLog.Data
             return true;
         }
 
+        public bool UpdateRatingAndStatus(int candidateId, byte newRating, byte newStatus)
+        {
+            var candidateExist = _context.Candidates.FirstOrDefault(i => i.Id == candidateId);
+
+            if (candidateExist == null)
+                return false;
+
+            candidateExist.Status = newStatus;
+            candidateExist.LastUpdate = DateTime.Now;
+
+            _context.StatusHistories.Add(new StatusHistory { CandidateId = candidateId, Status = newStatus, StatusUpdate = candidateExist.LastUpdate });
+
+            _context.SaveChanges();
+            return true;
+        }
+
         public bool UpdateCandidate(Candidate candidateWithUpdates)
         {
             var candidateExist = _context.Candidates.FirstOrDefault(i => i.Id == candidateWithUpdates.Id);
