@@ -137,7 +137,7 @@ namespace CandidateLog
             btnExportToXlsx.Visible = false;
             SearchFilter = null;
 
-            MessageBox.Show("No Candidates in the database.\r\nClick\"Create\" to insert new Candidates.",
+            MessageBox.Show("No Candidates in the database.\r\nClick\"New Candidate\" to insert new Candidates.",
                 "Information",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
@@ -396,7 +396,7 @@ namespace CandidateLog
             {
                 int candidateId = (int)dgvCandidates.Rows[row].Cells["DatabaseId"].Value;
 
-                CandidateInfo dialog = new CandidateInfo(candidateId);
+                CandidateInfo dialog = new CandidateInfo(this, candidateId);
                 dialog.ShowDialog();
             }
 

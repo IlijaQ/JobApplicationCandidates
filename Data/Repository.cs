@@ -1,5 +1,6 @@
 ﻿using CandidateLog.Models;
 using CandidateLog.Resources;
+using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -102,16 +103,28 @@ namespace CandidateLog.Data
             return true;
         }
 
-        public bool UpdateCandidate(Candidate candidateWithUpdates)
+        public bool UpdateCandidate(int id, Candidate candidateWithUpdates)
         {
-            var candidateExist = _context.Candidates.FirstOrDefault(i => i.Id == candidateWithUpdates.Id);
+            var candidate = _context.Candidates.FirstOrDefault(i => i.Id == id);
 
-            if (candidateExist == null)
+            if (candidate == null)
                 return false;
 
-            _context.Candidates.Attach(candidateWithUpdates);
+            candidate.Name = candidateWithUpdates.Name;
+            candidate.LastName = candidateWithUpdates.LastName;
+            candidate.Jmbg = candidateWithUpdates.Jmbg;
+            candidate.BirthDate = candidateWithUpdates.BirthDate;
+            candidate.Email = candidateWithUpdates.Email;
+            candidate.PhoneNumber = candidateWithUpdates.PhoneNumber;
+            candidate.AdditionalInfo = candidateWithUpdates.AdditionalInfo;
+            candidate.PhotoFilePath = candidateWithUpdates.PhotoFilePath;
+            candidate.LastUpdate = candidateWithUpdates.LastUpdate;
+            candidate.Rating = candidateWithUpdates.Rating;
+            candidate.Status = candidateWithUpdates.Status;
 
-            _context.Entry(candidateWithUpdates).State = EntityState.Modified;
+                //_context.Candidates.Attach(candidateWithUpdates);
+
+            //_context.Entry(candidateWithUpdates).State = EntityState.Modified;
 
             //foreach (Link l in candidateWithUpdates.Links)
             //    _context.Entry(l).State = EntityState.Modified;
@@ -130,7 +143,7 @@ namespace CandidateLog.Data
         }
         public void DeleteLink(int CandidateId, string link)
         {
-            var linkToRemove = _context.Links.FirstOrDefault(l => l.CandidateId == CandidateId && l.UrlPath == link);
+            var linkToRemove = _context.Links.FirstOrDefault(l => l.CandidateId == CandidateId && l.UrlPath.ToLower() == link.ToLower());
             _context.Links.Remove(linkToRemove);
             _context.SaveChanges();
         }
@@ -154,12 +167,12 @@ namespace CandidateLog.Data
         public void CreateAttachment(Attachment document)
         {
             _context.Attachments.Add(document);
-            _context.SaveChanges ();
+            _context.SaveChanges();
         }
 
-        public void DeleteAttachment(int CandidateId, string path)
+        public void DeleteAttachment(int CandidateId, string name)
         {
-            var document = _context.Attachments.FirstOrDefault(d => d.Id == CandidateId && d.FilePath == path);
+            var document = _context.Attachments.FirstOrDefault(d => d.Id == CandidateId);
 
             if (document == null)
                 return ;

@@ -70,7 +70,7 @@ namespace CandidateLog
         private void PopulateUi()
         {
             lblCandidateId.Text = lblCandidateId.Text + CandidateData.Id;
-            lblLastUpdate.Text = lblLastUpdate.Text + CandidateData.LastUpdate.ToString("dd.MM.yyyy.");
+            lblLastUpdate.Text = "Last Update: " + CandidateData.LastUpdate.ToString("dd.MM.yyyy. HH:mm");
 
             if (!string.IsNullOrEmpty(CandidateData.Name))
                 tbFirstName.Text = CandidateData.Name;
@@ -105,8 +105,7 @@ namespace CandidateLog
 
             DisplayPhoto();
 
-            if (CandidateData.Attachments.Count > 0)
-                DispayAttachments();
+            RefreshAttachmentDisplayPanel();
 
             RefreshLinkDisplayPanel();
         }
@@ -124,13 +123,6 @@ namespace CandidateLog
                     Dock = DockStyle.Fill
                 });
             }
-        }
-        private void DispayAttachments()
-        {
-            foreach (Attachment file in CandidateData.Attachments)
-                FilesAttachmentPath.Add(file, file.FilePath);
-
-            RefreshAttachmentDisplayPanel();
         }
 
         private void dtpBirthDate_ValueChanged(object sender, EventArgs e)
@@ -425,9 +417,7 @@ namespace CandidateLog
                 try
                 {
                     var repo = new Repository(db);
-                    bool success = repo.UpdateCandidate(parameters);
-
-                    AddAttachments(repo, CandidateData.Id, fileNamePrefix);
+                    bool success = repo.UpdateCandidate(CandidateData.Id, parameters);
 
                     if (InitialStatus != modifiedStatus)
                         repo.UpdateRatingAndStatus(CandidateData.Id, CandidateData.Rating, modifiedStatus);
@@ -451,32 +441,7 @@ namespace CandidateLog
             PreviousForm.LoadData();
             this.Close();
         }
-        private void AddAttachments(Repository repo, int id, string fileNamePrefix)
-        {
-            try
-            {
-                foreach (Attachment attachment in FilesAttachmentPath.Keys)
-                {
-                    string destinationPath = @".\..\..\Files\AttachmentContainer\" + fileNamePrefix + attachment.FileName;
-                    File.Copy(FilesAttachmentPath[attachment], destinationPath);
-
-                    attachment.CandidateId = id;
-                    attachment.FileName = fileNamePrefix + attachment.FileName;
-                    attachment.FilePath = destinationPath;
-                    attachment.LastUpdate = DateTime.Now;
-
-                    repo.CreateAttachment(attachment);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Candidate added to database,\r\nError saving file attachmetns.\r\n\r\n" + ex.Message,
-                    "Error saving Attachments",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                    );
-            }
-        }
+        
         private string PreparePhotoForUpdate(string fileNamePrefix)
         {
             if (string.IsNullOrEmpty(tbPhotoDragDrop.Text))
@@ -526,26 +491,20 @@ namespace CandidateLog
                 repo.CreateAttachment(attachment);
             }
 
-            List<Attachment> filesToBeDeleted = InitialFilesAttachmentPath
-                    .Where(i => !FilesAttachmentPath.Any(a => a.Key.Id == a.Key.Id))
-                    .Select(i => i.Key)
-                    .ToList();
+            var filesToBeDeleted = InitialFilesAttachmentPath
+                    .Where(i => !FilesAttachmentPath.Any(a => a.Key.Id == i.Key.Id))
+                    .ToDictionary(i => i.Key, i => i.Value);
 
-            foreach (Attachment attachment in filesToBeDeleted)
+            foreach (Attachment attachment in filesToBeDeleted.Keys)
             {
-                repo.DeleteAttachment(CandidateData.Id, attachment.FilePath);
+                repo.DeleteAttachment(CandidateData.Id, attachment.FileName);
                 File.Delete(attachment.FilePath);
             }
         }
-    
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        
-
-        
     }
 }

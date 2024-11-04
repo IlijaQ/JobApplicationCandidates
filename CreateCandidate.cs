@@ -336,13 +336,14 @@ namespace CandidateLog
                     AddAttachments(repo, newCandidateId, fileNamePrefix);
                     AddPhoto(repo, newCandidateId, fileNamePrefix);
 
+                    PreviousForm.PopulateCandidatesGrid();
+                    
                     MessageBox.Show("Candidate sucessfully added.\r\nID: " + newCandidateId,
                         "Success",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
                         );
-
-                    PreviousForm.PopulateCandidatesGrid();
+                    
                     this.Close();
                 }
                 catch (Exception ex)

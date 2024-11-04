@@ -2,6 +2,7 @@
 using CandidateLog.FileViewers;
 using CandidateLog.Models;
 using CandidateLog.Resources;
+using DocumentFormat.OpenXml.Bibliography;
 using Krypton.Toolkit;
 using System;
 using System.Collections.Generic;
@@ -79,7 +80,7 @@ namespace CandidateLog
         private void FillUiWithResults()
         {
             lblCandidateId.Text = "Candidate ID " + CandidateData.Id;
-            lblLastUpdate.Text = lblLastUpdate.Text + CandidateData.LastUpdate.ToString("dd.MM.yyyy.");
+            lblLastUpdate.Text = "Last Update: " + CandidateData.LastUpdate.ToString("dd.MM.yyyy. HH:mm");
 
             if (!string.IsNullOrEmpty(CandidateData.Name))
                 lblFrstName.Text = CandidateData.Name;
@@ -117,12 +118,14 @@ namespace CandidateLog
 
             DisplayPhoto();
 
-            if(CandidateData.Links.Count > 0)
+            LinksPanel.Controls.Clear();
+            if (CandidateData.Links.Count > 0)
                 DisplayLinks();
 
             if (CandidateData.StatusHistories.Count > 0)
                 PopulateStatusHistoryToolTip();
 
+            AttachmentDisplayPanel.Controls.Clear();
             if (CandidateData.Attachments.Count > 0)
                 DispayAttachments();
         }
@@ -321,6 +324,9 @@ namespace CandidateLog
                         bool success = repo.DeleteCandidate(CandidateData.Id);
                         if (success)
                         {
+                            File.Delete()
+
+
                             PreviousForm.PopulateCandidatesGrid();
                             MessageBox.Show($"Candidate successfully removed\r\nID  {CandidateData.Id}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             this.Close();
