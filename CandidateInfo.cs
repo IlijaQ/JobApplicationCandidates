@@ -21,12 +21,19 @@ namespace CandidateLog
 {
     public partial class CandidateInfo : KryptonForm
     {
+        private Candidates PreviousForm { get; }
         private int CandidateId { get; }
         private Candidate CandidateData { get; set; }
-        public CandidateInfo(int candidateId)
+        public CandidateInfo(Candidates candidateIndex, int candidateId)
         {
             InitializeComponent();
+            PreviousForm = candidateIndex;
             CandidateId = candidateId;
+            LoadData();
+        }
+
+        public void LoadData()
+        {
             bgwLoadCandidate.RunWorkerAsync();
         }
 
@@ -72,6 +79,7 @@ namespace CandidateLog
         private void FillUiWithResults()
         {
             lblCandidateId.Text = "Candidate ID " + CandidateData.Id;
+            lblLastUpdate.Text = lblLastUpdate.Text + CandidateData.LastUpdate.ToString("dd.MM.yyyy.");
 
             if (!string.IsNullOrEmpty(CandidateData.Name))
                 lblFrstName.Text = CandidateData.Name;
@@ -287,6 +295,48 @@ namespace CandidateLog
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
             }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            EditCandidate dialog = new EditCandidate(this, CandidateData);
+            dialog.ShowDialog();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DialogResult confirm = MessageBox.Show(
+                        $"Are you sure you want to delete?\r\nID  {CandidateData.Id} {CandidateData.Name} {CandidateData.LastName}",
+                        "Confirm",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+            if (confirm == DialogResult.Yes)
+            {
+                using(var db = new CandidateContext())
+                {
+                    try
+                    {
+                        var repo = new Repository(db);
+                        bool success = repo.DeleteCandidate(CandidateData.Id);
+                        if (success)
+                        {
+                            PreviousForm.PopulateCandidatesGrid();
+                            MessageBox.Show($"Candidate successfully removed\r\nID  {CandidateData.Id}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        DialogResult dialog = MessageBox.Show(ex.Message, "Error Celeting Candidate", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

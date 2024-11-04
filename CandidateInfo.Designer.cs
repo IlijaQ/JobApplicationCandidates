@@ -59,6 +59,8 @@
             this.lblPhotoNotUploaded = new Krypton.Toolkit.KryptonLabel();
             this.lblLinksPanelHeader = new Krypton.Toolkit.KryptonLabel();
             this.lblStatusHistoryViewInfo = new Krypton.Toolkit.KryptonLabel();
+            this.lblLastUpdate = new Krypton.Toolkit.KryptonLabel();
+            this.btnDelete = new Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)(this.LinksPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AttachmentDisplayPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SearchPanel)).BeginInit();
@@ -113,15 +115,17 @@
             this.btnCancel.Size = new System.Drawing.Size(132, 32);
             this.btnCancel.TabIndex = 59;
             this.btnCancel.Values.Text = "Cancel";
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnEdit
             // 
             this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnEdit.Location = new System.Drawing.Point(17, 547);
+            this.btnEdit.Location = new System.Drawing.Point(325, 546);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(132, 32);
             this.btnEdit.TabIndex = 58;
             this.btnEdit.Values.Text = "Edit";
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // AttachmentDisplayPanel
             // 
@@ -349,15 +353,35 @@
             this.lblStatusHistoryViewInfo.Values.Text = "Hover over status to view status history.";
             this.lblStatusHistoryViewInfo.Visible = false;
             // 
+            // lblLastUpdate
+            // 
+            this.lblLastUpdate.Location = new System.Drawing.Point(1033, 13);
+            this.lblLastUpdate.Name = "lblLastUpdate";
+            this.lblLastUpdate.Size = new System.Drawing.Size(96, 24);
+            this.lblLastUpdate.TabIndex = 78;
+            this.lblLastUpdate.Values.Text = "Last Update: ";
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDelete.Location = new System.Drawing.Point(12, 546);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(152, 32);
+            this.btnDelete.TabIndex = 79;
+            this.btnDelete.Values.Text = "Delete Candidate";
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // CandidateInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1332, 590);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.lblLastUpdate);
+            this.Controls.Add(this.SearchPanel);
             this.Controls.Add(this.lblStatusHistoryViewInfo);
             this.Controls.Add(this.lblLinksPanelHeader);
             this.Controls.Add(this.PicturePanel);
-            this.Controls.Add(this.SearchPanel);
             this.Controls.Add(this.lblRating);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblPhone);
@@ -429,5 +453,7 @@
         private Krypton.Toolkit.KryptonLabel lblPhotoNotUploaded;
         private Krypton.Toolkit.KryptonLabel lblLinksPanelHeader;
         private Krypton.Toolkit.KryptonLabel lblStatusHistoryViewInfo;
+        private Krypton.Toolkit.KryptonLabel lblLastUpdate;
+        private Krypton.Toolkit.KryptonButton btnDelete;
     }
 }

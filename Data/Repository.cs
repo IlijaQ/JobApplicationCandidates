@@ -52,7 +52,7 @@ namespace CandidateLog.Data
 
             if (filter.Status != null)
                 candidates = candidates.Where(s => s.Status == filter.Status);
-            
+
             return candidates;
         }
 
@@ -106,28 +106,41 @@ namespace CandidateLog.Data
         {
             var candidateExist = _context.Candidates.FirstOrDefault(i => i.Id == candidateWithUpdates.Id);
 
-            if(candidateExist == null)
+            if (candidateExist == null)
                 return false;
 
             _context.Candidates.Attach(candidateWithUpdates);
 
             _context.Entry(candidateWithUpdates).State = EntityState.Modified;
 
-            foreach (Link l in candidateWithUpdates.Links)
-                _context.Entry(l).State = EntityState.Modified;
+            //foreach (Link l in candidateWithUpdates.Links)
+            //    _context.Entry(l).State = EntityState.Modified;
 
-            foreach (StatusHistory sh in candidateWithUpdates.StatusHistories)
-                _context.Entry(sh).State = EntityState.Modified;
+            //foreach (StatusHistory sh in candidateWithUpdates.StatusHistories)
+            //    _context.Entry(sh).State = EntityState.Modified;
 
             _context.SaveChanges();
             return true;
-        } 
+        }
+
+        public void CreateLink(Link url)
+        {
+            _context.Links.Add(url);
+            _context.SaveChanges();
+        }
+        public void DeleteLink(int CandidateId, string link)
+        {
+            var linkToRemove = _context.Links.FirstOrDefault(l => l.CandidateId == CandidateId && l.UrlPath == link);
+            _context.Links.Remove(linkToRemove);
+            _context.SaveChanges();
+        }
 
         public bool DeleteCandidate(int id)
         {
             var candidate = _context.Candidates
                 .Include(l => l.Links)
                 .Include(s => s.StatusHistories)
+                .Include(a => a.Attachments)
                 .FirstOrDefault(i => i.Id == id);
 
             if (candidate == null)
@@ -144,16 +157,15 @@ namespace CandidateLog.Data
             _context.SaveChanges ();
         }
 
-        public bool DeleteAttachment(int id)
+        public void DeleteAttachment(int CandidateId, string path)
         {
-            var document = _context.Attachments.FirstOrDefault(i => i.Id == id);
+            var document = _context.Attachments.FirstOrDefault(d => d.Id == CandidateId && d.FilePath == path);
 
             if (document == null)
-                return false;
+                return ;
 
             _context.Attachments.Remove(document);
             _context.SaveChanges();
-            return true;
         }
 
         public void AddStatusHistoryEntry(StatusHistory entry)
