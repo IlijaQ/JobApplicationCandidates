@@ -324,9 +324,6 @@ namespace CandidateLog
                         bool success = repo.DeleteCandidate(CandidateData.Id);
                         if (success)
                         {
-                            File.Delete()
-
-
                             PreviousForm.PopulateCandidatesGrid();
                             MessageBox.Show($"Candidate successfully removed\r\nID  {CandidateData.Id}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             this.Close();
