@@ -22,3 +22,6 @@ _ReSharper*/
 *.Vs
 Packages/
 Node_modules/
+Files/
+Migrations/
+Resources/
